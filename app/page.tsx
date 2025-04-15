@@ -15,38 +15,37 @@ import {
 interface Listing {
   id: number;
   title: string;
-  address: string;
+  idHotel: number;
+  city: string;
   price: number;
-  image_urls: string[];
-  cover_image_url: string;
+  image: string;
 }
 
-const HomePage = () => {
- 
 
+const HomePage = () => {
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchListings = async () => {
-      const { data, error } = await supabase
-        .from("listings")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) {
-        console.error("Error fetching listings:", error.message);
-      } else {
+      try {
+        const res = await fetch(
+          "https://youradress.com/module/apirooms/roomlist"
+        );
+        const data = await res.json();
+        console.log(data);
         setListings(data);
+      } catch (error) {
+        console.error("Failed to fetch listings:", error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchListings();
   }, []);
 
   const featured = listings.slice(0, 3);
-
 
   return (
     <div className="container mx-auto px-6 py-10 space-y-20">
@@ -61,7 +60,9 @@ const HomePage = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/10 z-10"></div>
         <div className="relative z-20 h-full flex flex-col justify-center items-center text-center text-white px-4">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Welcome to YourAdress</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            Welcome to YourAdress
+          </h1>
           <p className="text-lg md:text-xl text-white/90 mb-6 max-w-xl">
             Discover and book charming places to stay across Morocco
           </p>
@@ -74,13 +75,16 @@ const HomePage = () => {
       </section>
 
       {/* Featured Listings */}
-     
+
       {/* Featured Listings */}
       <section className="relative">
         <div className="sticky top-20 z-10 animate-fade-in bg-white p-6 rounded-xl shadow-md">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-semibold">Featured Stays</h2>
-            <Link href="/hotels" className="text-yellow-600 hover:underline text-sm font-medium">
+            <Link
+              href="/hotels"
+              className="text-yellow-600 hover:underline text-sm font-medium"
+            >
               View All
             </Link>
           </div>
@@ -98,7 +102,7 @@ const HomePage = () => {
                 >
                   <div className="relative w-full h-56">
                     <Image
-                      src={room.cover_image_url || "/images/default-room.jpg"}
+                      src={room.image || "/images/default-room.jpg"}
                       alt={room.title}
                       fill
                       className="object-cover"
@@ -106,8 +110,10 @@ const HomePage = () => {
                   </div>
                   <div className="p-4">
                     <h3 className="text-lg font-bold mb-1">{room.title}</h3>
-                    <p className="text-sm text-gray-500 mb-2">{room.address}</p>
-                    <p className="text-sm text-gray-600 mb-2">{room.price} Dh / night</p>
+                    <p className="text-sm text-gray-500 mb-2">{room.city}</p>
+                    <p className="text-sm text-gray-600 mb-2">
+                      {room.price} Dh / night
+                    </p>
                   </div>
                 </Link>
               ))
@@ -119,7 +125,9 @@ const HomePage = () => {
       {/* Map Section */}
       <section className="relative">
         <div className="sticky top-24 z-10 animate-fade-in">
-          <h2 className="text-2xl font-semibold mb-6 text-center">Where to Find Us</h2>
+          <h2 className="text-2xl font-semibold mb-6 text-center">
+            Where to Find Us
+          </h2>
           <div className="w-full h-[400px] rounded-lg overflow-hidden shadow-md">
             <iframe
               title="Morocco Map"
@@ -139,7 +147,9 @@ const HomePage = () => {
       {/* Gallery Section */}
       <section className="relative">
         <div className="sticky top-24 z-10 animate-fade-in">
-          <h2 className="text-2xl font-semibold mb-12 text-center">Explore Morocco in Pictures</h2>
+          <h2 className="text-2xl font-semibold mb-12 text-center">
+            Explore Morocco in Pictures
+          </h2>
           <div className="grid grid-cols-2 md:grid-cols-6 gap-4 auto-rows-[200px]">
             {[
               {
@@ -229,7 +239,9 @@ const HomePage = () => {
       {/* Testimonials Section */}
       <section className="relative">
         <div className="sticky top-24 z-10 animate-fade-in bg-gray-100 rounded-xl p-10">
-          <h2 className="text-2xl font-semibold mb-8 text-center">What Guests Are Saying</h2>
+          <h2 className="text-2xl font-semibold mb-8 text-center">
+            What Guests Are Saying
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               {
@@ -259,45 +271,46 @@ const HomePage = () => {
       </section>
 
       <section className="relative py-20 bg-gradient-to-b from-white to-gray-50">
-  <div className="sticky top-24 z-10 animate-in fade-in duration-700 ease-out">
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">
-        Frequently Asked Questions
-      </h2>
+        <div className="sticky top-24 z-10 animate-in fade-in duration-700 ease-out">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">
+              Frequently Asked Questions
+            </h2>
 
-      <Accordion type="single" collapsible className="space-y-4">
-        <AccordionItem value="q1">
-          <AccordionTrigger className="text-lg font-medium bg-white rounded-xl px-6 py-4 shadow-sm hover:shadow-md transition-all duration-200">
-            How do I book a stay?
-          </AccordionTrigger>
-          <AccordionContent className="text-gray-600 bg-white px-6 py-4 rounded-b-xl border-t border-gray-100">
-            Simply browse listings, pick your dates, fill in your information, and confirm your booking.
-          </AccordionContent>
-        </AccordionItem>
+            <Accordion type="single" collapsible className="space-y-4">
+              <AccordionItem value="q1">
+                <AccordionTrigger className="text-lg font-medium bg-white rounded-xl px-6 py-4 shadow-sm hover:shadow-md transition-all duration-200">
+                  How do I book a stay?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 bg-white px-6 py-4 rounded-b-xl border-t border-gray-100">
+                  Simply browse listings, pick your dates, fill in your
+                  information, and confirm your booking.
+                </AccordionContent>
+              </AccordionItem>
 
-        <AccordionItem value="q2">
-          <AccordionTrigger className="text-lg font-medium bg-white rounded-xl px-6 py-4 shadow-sm hover:shadow-md transition-all duration-200">
-            Can I cancel my reservation?
-          </AccordionTrigger>
-          <AccordionContent className="text-gray-600 bg-white px-6 py-4 rounded-b-xl border-t border-gray-100">
-            Yes, cancellation policies depend on the listing. Please check the details on each listing page.
-          </AccordionContent>
-        </AccordionItem>
+              <AccordionItem value="q2">
+                <AccordionTrigger className="text-lg font-medium bg-white rounded-xl px-6 py-4 shadow-sm hover:shadow-md transition-all duration-200">
+                  Can I cancel my reservation?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 bg-white px-6 py-4 rounded-b-xl border-t border-gray-100">
+                  Yes, cancellation policies depend on the listing. Please check
+                  the details on each listing page.
+                </AccordionContent>
+              </AccordionItem>
 
-        <AccordionItem value="q3">
-          <AccordionTrigger className="text-lg font-medium bg-white rounded-xl px-6 py-4 shadow-sm hover:shadow-md transition-all duration-200">
-            Is payment secure?
-          </AccordionTrigger>
-          <AccordionContent className="text-gray-600 bg-white px-6 py-4 rounded-b-xl border-t border-gray-100">
-            Absolutely. All payments are processed securely via our trusted partners like CMI and Wafacash.
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </div>
-  </div>
-</section>
-
-   
+              <AccordionItem value="q3">
+                <AccordionTrigger className="text-lg font-medium bg-white rounded-xl px-6 py-4 shadow-sm hover:shadow-md transition-all duration-200">
+                  Is payment secure?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 bg-white px-6 py-4 rounded-b-xl border-t border-gray-100">
+                  Absolutely. All payments are processed securely via our
+                  trusted partners like CMI and Wafacash.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

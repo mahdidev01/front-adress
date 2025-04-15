@@ -22,8 +22,14 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { getListings } from "@/lib/supabase/getListings";
+// import { getListings } from "@/lib/supabase/getListings";
 import { Listing } from "@/types";
+
+const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-") // replace spaces/special with dash
+    .replace(/^-+|-+$/g, "");    // remove leading/trailing dashes
 
 const HotelListingsPage = () => {
   const [listings, setListings] = useState<Listing[]>([]);
@@ -58,9 +64,14 @@ const HotelListingsPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getListings();
-      setListings(data);
-      setLoading(false);
+      try {
+        const res = await fetch("https://youradress.com/module/apirooms/roomlist");
+        const data = await res.json();
+        setListings(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch listings:", error);
+      }
     };
 
     fetchData();
@@ -70,7 +81,7 @@ const HotelListingsPage = () => {
     if (!applyFilters) return true;
 
     const matchesCity = selectedCity
-      ? room.address.toLowerCase().includes(selectedCity.toLowerCase())
+      ? room.city.toLowerCase().includes(selectedCity.toLowerCase())
       : true;
 
     const matchesGuests = guestFilter ? room.guests >= guestFilter : true;
@@ -199,7 +210,7 @@ const HotelListingsPage = () => {
             >
               <div className="relative w-full h-48">
                 <Image
-                  src={room.cover_image_url || "/images/default-room.jpg"}
+                  src={room.image || "/images/default-room.jpg"}
                   alt={room.title}
                   fill
                   className="object-cover"
@@ -207,9 +218,9 @@ const HotelListingsPage = () => {
               </div>
               <div className="p-4 space-y-2">
                 <h2 className="text-lg font-semibold">{room.title}</h2>
-                <p className="text-sm text-gray-500">{room.address}</p>
+                <p className="text-sm text-gray-500">{room.city}</p>
                 <p className="text-sm text-gray-600">
-                  {room.beds} Beds · {room.baths} Baths · {room.guests} Guests
+                {room.beds ?? 1} Beds · {room.baths ?? 1} Baths · {room.guests ?? 2} Guests
                 </p>
                 <div className="flex justify-between items-center">
                   <p className="text-base font-semibold text-gray-800">{room.price} Dh/Night</p>
