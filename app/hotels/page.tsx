@@ -62,33 +62,36 @@ const HotelListingsPage = () => {
       try {
         let url = "https://youradress.com/module/apirooms/roomavailability";
         const params = new URLSearchParams();
-
+  
         if (dateRange?.from && dateRange?.to) {
           params.append("from", formatDate(dateRange.from));
           params.append("to", formatDate(dateRange.to));
         }
-
-        if(selectedCity){
+  
+        if (selectedCity) {
           params.append("city", selectedCity);
         }
-
+  
+        if (guestFilter) {
+          params.append("guests", guestFilter.toString());
+        }
+  
         if (params.toString()) {
           url += "?" + params.toString();
         }
-
+  
         const res = await fetch(url);
         const data = await res.json();
-        console.log(data);
         setListings(data);
         setLoading(false);
-        setApplyFilters(false); // Reset apply flag
       } catch (error) {
         console.error("Failed to fetch listings:", error);
       }
     };
-
-    if (applyFilters) fetchData();
-  }, [applyFilters, dateRange]);
+  
+    fetchData();
+  }, [dateRange, selectedCity, guestFilter]);
+  
 
   // Filter results client-side for city and guests
   const filteredListings = listings.filter((room) => {
@@ -241,7 +244,7 @@ const HotelListingsPage = () => {
                 <h2 className="text-lg font-semibold">{room.title}</h2>
                 <p className="text-sm text-gray-500">{room.city}</p>
                 <p className="text-sm text-gray-600">
-                  {room.beds ?? 1} Beds · {room.baths ?? 1} Baths · {room.guests ?? 2} Guests
+                  {room.rooms ?? 1} Chambres · {room.baths ?? 1} Baths · {room.guests ?? 2} Guests
                 </p>
                 <div className="flex justify-between items-center">
                   <p className="text-base font-semibold text-gray-800">
