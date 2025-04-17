@@ -32,6 +32,14 @@ const formatDate = (date: Date) => {
   return date.toISOString().split("T")[0];
 };
 
+const slugify = (str: string) =>
+  str
+    .toLowerCase()
+    .normalize("NFD") // retire les accents
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-") // remplace les espaces et caractères spéciaux par -
+    .replace(/(^-|-$)+/g, ""); // retire les tirets en début/fin
+
 const HotelListingsPage = () => {
   const [listings, setListings] = useState<Listing[]>([]);
   const [selectedCity, setSelectedCity] = useState<string>("");
@@ -129,7 +137,7 @@ const HotelListingsPage = () => {
       });
 
       map.scrollZoom.disable();
-      map.touchZoomRotate.enable({ cooperative: true });
+      map.touchZoomRotate.enable();
 
       const staticPositions = [
         { lat: 33.58211, lng: -7.60154 },
@@ -146,9 +154,15 @@ const HotelListingsPage = () => {
           .setPopup(
             new mapboxgl.Popup().setHTML(`
             <div style="width: 220px;">
-              <img src="${room.image}" style="width: 100%; border-radius: 6px;" />
+              <img src="${
+                room.image?.startsWith("http")
+                  ? room.image
+                  : "https://booking.youradress.com/modules/hotelreservationsystem/views/img/default-room.jpg"
+              }" style="width: 100%; border-radius: 6px;" />
               <h3 style="margin-top: 8px;">${room.title}</h3>
-              <p style="font-weight: bold; margin: 4px 0;">${room.price} Dh/Nuit</p>
+              <p style="font-weight: bold; margin: 4px 0;">${
+                room.price
+              } Dh/Nuit</p>
               <a href="https://booking.youradress.com/fr/16-studios" target="_blank"
                 style="display:block;text-align:center;background-color:#facc15;color:white;padding:6px 12px;border-radius:4px;text-decoration:none;margin-top:6px;">
                 Réserver
@@ -292,13 +306,16 @@ const HotelListingsPage = () => {
                   key={room.id}
                   href={
                     hasDates
-                      ? `https://booking.youradress.com/fr/16-studios?date_from=${
+                      ? `https://booking.youradress.com/fr/studios/${
+                          room.id
+                        }-${slugify(room.title)}.html?date_from=${
                           dateRange?.from ? formatDate(dateRange.from) : ""
                         }&date_to=${
                           dateRange?.to ? formatDate(dateRange.to) : ""
                         }&location=14`
                       : "#"
                   }
+                  target="_blank"
                   onClick={(e) => {
                     if (!hasDates) {
                       e.preventDefault();
