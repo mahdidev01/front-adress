@@ -99,7 +99,8 @@ const HomePage = () => {
             ) : (
               featured.map((room) => (
                 <Link
-                  href={`/room/${room.id}`}
+                  href={"/hotels"}
+                  // href={`/room/${room.id}`}
                   key={room.id}
                   className="bg-white shadow-md border rounded-lg transition ease-in hover:scale-90 overflow-hidden"
                 >
