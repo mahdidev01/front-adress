@@ -114,35 +114,37 @@ const HotelListingsPage = () => {
 
   //mapbox
   const mapContainer = useRef(null);
+  const mapRef = useRef<mapboxgl.Map | null>(null);
 
-useEffect(() => {
-  if (!loading && listings.length > 0) {
-    mapboxgl.accessToken = "pk.eyJ1IjoibWFoZGkxMDAiLCJhIjoiY203dnhrb2ZmMDExbjJscjFlaTd0ZHFzcCJ9.l3WMtWsKakiAT79ijtVLtQ";
+  useEffect(() => {
+    if (applyFilters && mapContainer.current && !mapRef.current) {
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoibWFoZGkxMDAiLCJhIjoiY203dnhrb2ZmMDExbjJscjFlaTd0ZHFzcCJ9.l3WMtWsKakiAT79ijtVLtQ";
 
-    const map = new mapboxgl.Map({
-      container: 'map', // l'id de ta div
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-7.62, 33.57], // Casablanca
-      zoom: 12,
-    });
+      const map = new mapboxgl.Map({
+        container: mapContainer.current!, // l'id de ta div
+        style: "mapbox://styles/mapbox/streets-v11",
+        center: [-7.62, 33.57], // Casablanca
+        zoom: 12,
+      });
 
-    map.scrollZoom.disable();
-    map.touchZoomRotate.enable({ cooperative: true });
+      map.scrollZoom.disable();
+      map.touchZoomRotate.enable({ cooperative: true });
 
-    const staticPositions = [
-      { lat: 33.58211, lng: -7.60154 },
-      { lat: 33.56213, lng: -7.63064 },
-      { lat: 33.57753, lng: -7.61361 },
-      { lat: 33.57754, lng: -7.63917 },
-    ];
+      const staticPositions = [
+        { lat: 33.58211, lng: -7.60154 },
+        { lat: 33.56213, lng: -7.63064 },
+        { lat: 33.57753, lng: -7.61361 },
+        { lat: 33.57754, lng: -7.63917 },
+      ];
 
-    // Associer chaque position statique à une room
-    listings.slice(0, 4).forEach((room, index) => {
-      const pos = staticPositions[index];
-      new mapboxgl.Marker()
-        .setLngLat([pos.lng, pos.lat])
-        .setPopup(
-          new mapboxgl.Popup().setHTML(`
+      // Associer chaque position statique à une room
+      listings.slice(0, 4).forEach((room, index) => {
+        const pos = staticPositions[index];
+        new mapboxgl.Marker()
+          .setLngLat([pos.lng, pos.lat])
+          .setPopup(
+            new mapboxgl.Popup().setHTML(`
             <div style="width: 220px;">
               <img src="${room.image}" style="width: 100%; border-radius: 6px;" />
               <h3 style="margin-top: 8px;">${room.title}</h3>
@@ -153,13 +155,13 @@ useEffect(() => {
               </a>
             </div>
           `)
-        )
-        .addTo(map);
-    });
+          )
+          .addTo(map);
+      });
 
-    return () => map.remove();
-  }
-}, [loading, listings]);
+      return () => map.remove();
+    }
+  }, [applyFilters, listings]);
 
   return (
     <div className="flex flex-col gap-6 px-6 py-10 container mx-auto">
@@ -263,85 +265,94 @@ useEffect(() => {
           </Button>
         </div>
       </div>
-
-      {/* Listings */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {loading
-          ? Array.from({ length: 8 }).map((_, index) => (
-              <div
-                key={index}
-                className="bg-white p-4 shadow rounded-lg space-y-4"
-              >
-                <Skeleton className="h-48 w-full rounded" />
-                <Skeleton className="h-6 w-2/3" />
-                <Skeleton className="h-4 w-1/2" />
-                <Skeleton className="h-4 w-1/3" />
-                <Skeleton className="h-10 w-full mt-2" />
-              </div>
-            ))
-          : filteredListings.map((room, index) => (
-              <Link
-                key={room.id}
-                href={
-                  hasDates
-                    ? `https://booking.youradress.com/fr/16-studios?date_from=${
-                        dateRange?.from ? formatDate(dateRange.from) : ""
-                      }&date_to=${
-                        dateRange?.to ? formatDate(dateRange.to) : ""
-                      }&location=14`
-                    : "#"
-                }
-                onClick={(e) => {
-                  if (!hasDates) {
-                    e.preventDefault();
-                    alert(
-                      "Veuillez sélectionner vos dates et destination pour continuer"
-                    );
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Listings */}
+        <div
+          className={`${
+            applyFilters
+              ? "w-full lg:w-1/2 grid-cols-1 sm:grid-cols-2"
+              : "w-full lg:w-full grid-cols-1 sm:grid-cols-3"
+          } grid gap-6`}
+        >
+          {loading
+            ? Array.from({ length: 8 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="bg-white p-4 shadow rounded-lg space-y-4"
+                >
+                  <Skeleton className="h-48 w-full rounded" />
+                  <Skeleton className="h-6 w-2/3" />
+                  <Skeleton className="h-4 w-1/2" />
+                  <Skeleton className="h-4 w-1/3" />
+                  <Skeleton className="h-10 w-full mt-2" />
+                </div>
+              ))
+            : filteredListings.map((room, index) => (
+                <Link
+                  key={room.id}
+                  href={
+                    hasDates
+                      ? `https://booking.youradress.com/fr/16-studios?date_from=${
+                          dateRange?.from ? formatDate(dateRange.from) : ""
+                        }&date_to=${
+                          dateRange?.to ? formatDate(dateRange.to) : ""
+                        }&location=14`
+                      : "#"
                   }
-                }}
-                ref={(el) => {
-                  cardRefs.current[index] = el;
-                }}
-                className="block bg-white shadow-md border rounded-lg overflow-hidden hover:shadow-lg hover:scale-[1.02] transition-transform duration-300"
-              >
-                <div className="relative w-full h-48">
-                  <Image
-                    src={room.image || "/images/default-room.jpg"}
-                    alt={room.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-4 space-y-2">
-                  <h2 className="text-lg font-semibold">{room.title}</h2>
-                  <p className="text-sm text-gray-500">{room.city}</p>
-                  <p className="text-sm text-gray-600">
-                    {room.rooms ?? 1} Chambres · {room.baths ?? 1} Baths ·{" "}
-                    {room.guests ?? 2} Guests
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <p className="text-base font-semibold text-gray-800">
-                      {room.price} Dh/Night
-                    </p>
-                    <button className="bg-yellow-500 text-white text-sm font-medium px-4 py-2 rounded hover:bg-yellow-600 transition cursor-pointer">
-                      Réserver en ligne
-                    </button>
+                  onClick={(e) => {
+                    if (!hasDates) {
+                      e.preventDefault();
+                      alert(
+                        "Veuillez sélectionner vos dates et destination pour continuer"
+                      );
+                    }
+                  }}
+                  ref={(el) => {
+                    cardRefs.current[index] = el;
+                  }}
+                  className="block bg-white shadow-md border rounded-lg overflow-hidden hover:shadow-lg hover:scale-[1.02] transition-transform duration-300"
+                >
+                  <div className="relative w-full h-48">
+                    <Image
+                      src={room.image || "/images/default-room.jpg"}
+                      alt={room.title}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
-                </div>
-              </Link>
-            ))}
+                  <div className="p-4 space-y-2">
+                    <h2 className="text-lg font-semibold">{room.title}</h2>
+                    <p className="text-sm text-gray-500">{room.city}</p>
+                    <p className="text-sm text-gray-600">
+                      {room.rooms ?? 1} Chambres · {room.baths ?? 1} Baths ·{" "}
+                      {room.guests ?? 2} Guests
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <p className="text-base font-semibold text-gray-800">
+                        {room.price} Dh/Night
+                      </p>
+                      <button className="bg-yellow-500 text-white text-sm font-medium px-4 py-2 rounded hover:bg-yellow-600 transition cursor-pointer">
+                        Réserver en ligne
+                      </button>
+                    </div>
+                  </div>
+                </Link>
+              ))}
 
-        {!loading && filteredListings.length === 0 && (
-          <p className="text-center text-gray-500 mt-10 col-span-full">
-            No rooms match your filters.
-          </p>
+          {!loading && filteredListings.length === 0 && (
+            <p className="text-center text-gray-500 mt-10 col-span-full">
+              No rooms match your filters.
+            </p>
+          )}
+        </div>
+        {/* Carte Mapbox */}
+        {applyFilters && (
+          <div
+            className="w-full lg:w-1/2 h-[600px] rounded-xl overflow-hidden"
+            ref={mapContainer}
+          />
         )}
       </div>
-      {/* Carte Mapbox */}
-      <div
-        className="w-full h-[400px] rounded-xl overflow-hidden mb-6"
-        id="map"
-      />
     </div>
   );
 };
