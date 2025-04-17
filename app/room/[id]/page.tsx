@@ -24,6 +24,7 @@ interface Listing {
   beds: number;
   baths: number;
   guests: number;
+  city: string;
   cover_image_url: string;
   image_urls: string[];
   available_from: string;

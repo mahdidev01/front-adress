@@ -60,7 +60,7 @@ const HotelListingsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let url = "https://youradress.com/module/apirooms/roomavailability";
+        let url = "https://booking.youradress.com/module/apirooms/roomavailability";
         const params = new URLSearchParams();
   
         if (dateRange?.from && dateRange?.to) {
@@ -96,7 +96,7 @@ const HotelListingsPage = () => {
   // Filter results client-side for city and guests
   const filteredListings = listings.filter((room) => {
     const matchesCity = selectedCity
-      ? room.city.toLowerCase().includes(selectedCity.toLowerCase())
+      ? (room as any).city.toLowerCase().includes(selectedCity.toLowerCase())
       : true;
 
     const matchesGuests = guestFilter ? room.guests >= guestFilter : true;

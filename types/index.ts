@@ -10,6 +10,9 @@ export interface Listing {
     images: string[];
     lat: number;
     lng: number;
+    city: string;
+    image: string;
+    rooms?: number;
     description: string;
     available_from: string;
     available_to: string;
