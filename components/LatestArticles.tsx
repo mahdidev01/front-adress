@@ -1,26 +1,39 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-
 import { Button } from '@/components/ui/button';
-import { Article, allArticles } from '@/app/data/articles';
+
+interface Article {
+  id: string;
+  title: string;
+  summary: string;
+  image_url: string;
+  url: string;
+}
 
 export default function LatestArticles() {
-  const latestArticles: Article[] = allArticles
-    .slice()
-    .sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime())
-    .slice(0, 3);
+  const [articles, setArticles] = useState<Article[]>([]);
+
+  useEffect(() => {
+    fetch('https://booking.youradress.com/module/apirooms/articlesapi')
+      .then(res => res.json())
+      .then(data => {
+        const latest = data.slice(0, 3);
+        setArticles(latest);
+        console.log(articles);
+      });
+  }, []);
 
   return (
     <section className="py-12 bg-muted/40">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-10 text-center">Trouvez l'inspiration pour votre prochain voyage</h2>
+        <h2 className="text-3xl font-bold mb-10 text-center">
+          Trouvez l'inspiration pour votre prochain voyage
+        </h2>
         <div className="grid md:grid-cols-3 gap-6">
-          {latestArticles.map((article) => (
-            <div
-              key={article.id}
-              className="relative h-[300px] rounded-xl overflow-hidden group shadow-lg"
-            >
+          {articles.map(article => (
+            <div key={article.id} className="relative h-[300px] rounded-xl overflow-hidden group shadow-lg">
               <img
                 src={article.image_url}
                 alt={article.title}
@@ -30,7 +43,7 @@ export default function LatestArticles() {
                 <h3 className="text-lg font-semibold">{article.title}</h3>
                 <p className="text-xs mt-1 line-clamp-2">{article.summary}</p>
                 <Button asChild variant="secondary" className="mt-3 w-fit text-white bg-white/10 hover:bg-white/20 border border-white/30 backdrop-blur-sm">
-                  <Link href={`/articles/${article.id}`}>Lire l’article</Link>
+                  <Link href={`/articles/${article.id}-${article.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`}>Lire l’article</Link>
                 </Button>
               </div>
             </div>

@@ -26,7 +26,7 @@ const AproposPage = () => {
         <Skeleton className="w-[90%] h-5 mb-12 mx-auto" />
       ) : (
         <p className="text-lg text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-          Bienvenue sur notre plateforme de réservation d’hôtels, où chaque séjour devient une expérience inoubliable.
+          Bienvenue sur notre plateforme de réservation d’hébergements, où chaque séjour devient une expérience inoubliable.
         </p>
       )}
 

@@ -126,7 +126,7 @@ const HomePage = () => {
                     <h3 className="text-lg font-bold mb-1">{room.title}</h3>
                     <p className="text-sm text-gray-500 mb-2">{room.city}</p>
                     <p className="text-sm text-gray-600 mb-2">
-                      {room.price} Dh / night
+                    {Number(room.price).toFixed(2)} Dh / night
                     </p>
                   </div>
                 </Link>
@@ -315,7 +315,7 @@ const HomePage = () => {
           <div className="w-full h-[400px] rounded-lg overflow-hidden shadow-md">
             <iframe
               title="Morocco Map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d107914.4912856344!2d-8.077893439479094!3d31.63427410180338!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xdafe989defdb3df%3A0x1df179e6c0dbde5c!2sMarrakech!5e0!3m2!1sen!2sma!4v1712265136256!5m2!1sen!2sma"
+              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d63262.40123580042!2d-7.589991830031025!3d33.55804234174098!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sma!4v1744988820503!5m2!1sen!2sma"
               width="100%"
               height="100%"
               style={{ border: 0 }}
