@@ -163,7 +163,7 @@ const HotelListingsPage = () => {
               <p style="font-weight: bold; margin: 4px 0;">${
                 room.price
               } Dh/Nuit</p>
-              <a href="https://booking.youradress.com/fr/16-studios" target="_blank"
+              <a href="#" target="_blank"
                 style="display:block;text-align:center;background-color:#facc15;color:white;padding:6px 12px;border-radius:4px;text-decoration:none;margin-top:6px;">
                 Réserver
               </a>
@@ -313,16 +313,18 @@ const HotelListingsPage = () => {
                         }&date_to=${
                           dateRange?.to ? formatDate(dateRange.to) : ""
                         }&location=14`
-                      : "#"
+                      : `https://booking.youradress.com/fr/studios/${
+                          room.id
+                        }-${slugify(room.title)}.html`
                   }
                   target="_blank"
                   onClick={(e) => {
-                    if (!hasDates) {
-                      e.preventDefault();
-                      alert(
-                        "Veuillez sélectionner vos dates et destination pour continuer"
-                      );
-                    }
+                    // if (!hasDates) {
+                    //   e.preventDefault();
+                    //   alert(
+                    //     "Veuillez sélectionner vos dates et destination pour continuer"
+                    //   );
+                    // }
                   }}
                   ref={(el) => {
                     cardRefs.current[index] = el;

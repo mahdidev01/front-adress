@@ -14,6 +14,14 @@ import {
 import LatestArticles from "@/components/LatestArticles";
 import { SearchFilter } from "@/components/SearchFilter";
 
+const slugify = (str: string) =>
+  str
+    .toLowerCase()
+    .normalize("NFD") // retire les accents
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-") // remplace les espaces et caractères spéciaux par -
+    .replace(/(^-|-$)+/g, ""); // retire les tirets en début/fin
+
 interface Listing {
   id: number;
   title: string;
@@ -69,7 +77,7 @@ const HomePage = () => {
             Discover and book charming places to stay across Morocco
           </p>
           <Link href="/hotels">
-          <SearchFilter />
+            <SearchFilter />
             {/* <Button className="text-lg px-12 py-6 rounded-full bg-white text-black hover:bg-gray-200 transition">
               Browse All Stays
             </Button> */}
@@ -99,9 +107,11 @@ const HomePage = () => {
             ) : (
               featured.map((room) => (
                 <Link
-                  href={"/hotels"}
-                  // href={`/room/${room.id}`}
+                  href={`https://booking.youradress.com/fr/studios/${
+                    room.id
+                  }-${slugify(room.title)}.html`}
                   key={room.id}
+                  target="_blank"
                   className="bg-white shadow-md border rounded-lg transition ease-in hover:scale-90 overflow-hidden"
                 >
                   <div className="relative w-full h-56">
