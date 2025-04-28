@@ -29,7 +29,10 @@ mapboxgl.accessToken =
 
 // Helper to format dates into YYYY-MM-DD
 const formatDate = (date: Date) => {
-  return date.toISOString().split("T")[0];
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  return `${year}-${month}-${day}`;
 };
 
 const slugify = (str: string) =>
@@ -52,6 +55,14 @@ const HotelListingsPage = () => {
   const from = dateRange?.from ? formatDate(dateRange.from) : "";
   const to = dateRange?.to ? formatDate(dateRange.to) : "";
   const hasDates = Boolean(from && to);
+
+  const [today, setToday] = useState<Date>(new Date());
+
+  useEffect(() => {
+    const now = new Date();
+    now.setHours(0, 0, 0, 0); // 00:00 heure locale
+    setToday(now);
+  }, []);
 
   const moroccanCities = [
     "Casablanca",
@@ -164,12 +175,12 @@ const HotelListingsPage = () => {
                 room.price
               } Dh/Nuit</p>
               <a href="https://booking.youradress.com/fr/studios/${
-                          room.id
-                        }-${slugify(room.title)}.html?date_from=${
-                          dateRange?.from ? formatDate(dateRange.from) : ""
-                        }&date_to=${
-                          dateRange?.to ? formatDate(dateRange.to) : ""
-                        }&location=14" target="_blank"
+                room.id
+              }-${slugify(room.title)}.html?date_from=${
+              dateRange?.from ? formatDate(dateRange.from) : ""
+            }&date_to=${
+              dateRange?.to ? formatDate(dateRange.to) : ""
+            }&location=14" target="_blank"
                 style="display:block;text-align:center;background-color:#facc15;color:white;padding:6px 12px;border-radius:4px;text-decoration:none;margin-top:6px;">
                 Réserver
               </a>
@@ -263,6 +274,7 @@ const HotelListingsPage = () => {
                 selected={dateRange}
                 onSelect={setDateRange}
                 numberOfMonths={2}
+                disabled={{ before: today }}
               />
             </PopoverContent>
           </Popover>
@@ -310,19 +322,11 @@ const HotelListingsPage = () => {
             : filteredListings.map((room, index) => (
                 <Link
                   key={room.id}
-                  href={
-                    hasDates
-                      ? `https://booking.youradress.com/fr/studios/${
-                          room.id
-                        }-${slugify(room.title)}.html?date_from=${
-                          dateRange?.from ? formatDate(dateRange.from) : ""
-                        }&date_to=${
-                          dateRange?.to ? formatDate(dateRange.to) : ""
-                        }&location=14`
-                      : `https://booking.youradress.com/fr/studios/${
-                          room.id
-                        }-${slugify(room.title)}.html`
-                  }
+                  href={`/room/${room.id}?date_from=${
+                    dateRange?.from ? formatDate(dateRange.from) : ""
+                  }&date_to=${
+                    dateRange?.to ? formatDate(dateRange.to) : ""
+                  }&location=14`}
                   target="_blank"
                   onClick={(e) => {
                     // if (!hasDates) {
@@ -354,7 +358,7 @@ const HotelListingsPage = () => {
                     </p>
                     <div className="flex justify-between items-center">
                       <p className="text-base font-semibold text-gray-800">
-                      {Number(room.price).toFixed(2)} Dh/Night
+                        {Number(room.price).toFixed(2)} Dh/Night
                       </p>
                       <button className="bg-yellow-500 text-white text-sm font-medium px-4 py-2 rounded hover:bg-yellow-600 transition cursor-pointer">
                         Réserver en ligne
