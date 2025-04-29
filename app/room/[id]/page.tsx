@@ -53,12 +53,19 @@ const RoomDetailsPage = () => {
   useEffect(() => {
     const fetchRoom = async () => {
       try {
-        if (!isNaN(roomId) && dateFrom && dateTo) {
-          const res = await fetch(
-            `https://booking.youradress.com/module/apirooms/roomdetails?id_room_type=${roomId}&from=${dateFrom}&to=${dateTo}`
-          );
+        let url = "";
+        if (!isNaN(roomId)) {
+          if (dateFrom && dateTo) {
+            // If dates are selected, get availability and pricing
+            url = `https://booking.youradress.com/module/apirooms/roomdetails?id_room_type=${roomId}&from=${dateFrom}&to=${dateTo}`;
+          } else {
+            // If no dates, just get the basic info
+            url = `https://booking.youradress.com/module/apirooms/roombasicinfo?id_room_type=${roomId}`;
+          }
+
+          const res = await fetch(url);
           const data = await res.json();
-          setRoomInfo(data); // car tu as un tableau, prends le premier élément
+          setRoomInfo(data);
           console.log("Room details:", data);
         }
       } catch (error) {
@@ -237,9 +244,11 @@ const RoomDetailsPage = () => {
             <p>
               Guests: <strong>{selectedGuests}</strong>
             </p>
-            <p>
-              Dates: {formatDate(dateFrom)} → {formatDate(dateTo)}
-            </p>
+            {dateFrom && dateTo && (
+              <p>
+                Dates: {formatDate(dateFrom)} → {formatDate(dateTo)}
+              </p>
+            )}
           </div>
 
           {nights > 0 && (
@@ -248,7 +257,7 @@ const RoomDetailsPage = () => {
                 <strong>Total nights:</strong> {nights}
               </p>
               <p className="font-semibold text-base sm:text-lg">
-                Total: {(totalPrice).toFixed(2)} Dh
+                Total: {totalPrice.toFixed(2)} Dh
               </p>
             </div>
           )}
