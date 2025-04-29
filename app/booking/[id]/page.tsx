@@ -54,7 +54,14 @@ const FormPage = () => {
     if (from) setFromDate(new Date(from));
     if (to) setToDate(new Date(to));
     if (guests) setFormData((prev) => ({ ...prev, guests: Number(guests) }));
-  }, [searchParams]);
+
+    setFormData((prev: any) => ({
+      ...prev,
+      roomId: id,
+      date_from: from,
+      date_to: to,
+    }));
+  }, [searchParams, id]);
 
   const houseRules = "Pas de fêtes, pas d'animaux, respect du voisinage.";
   const paymentMethod = "En ligne";
@@ -62,7 +69,10 @@ const FormPage = () => {
   const nextStep = () => {
     if (
       step === 1 &&
-      (!formData.name || !formData.surname || !formData.phone || !formData.email)
+      (!formData.name ||
+        !formData.surname ||
+        !formData.phone ||
+        !formData.email)
     ) {
       alert("Veuillez remplir tous les champs obligatoires.");
       return;
@@ -73,7 +83,8 @@ const FormPage = () => {
   const prevStep = () => setStep((prev) => prev - 1);
   const progress = (step / 3) * 100;
 
-  if (!title) return <div className="p-10 text-center">Chambre introuvable.</div>;
+  if (!title)
+    return <div className="p-10 text-center">Chambre introuvable.</div>;
 
   return (
     <div className="flex flex-col md:flex-row gap-8 justify-between">
@@ -108,6 +119,8 @@ const FormPage = () => {
 
             {step === 2 && (
               <Step2Payment
+                formData={formData}
+                setFormData={setFormData}
                 nextStep={nextStep}
                 prevStep={prevStep}
               />

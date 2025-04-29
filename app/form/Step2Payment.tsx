@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { CircleCheck, CpuIcon, ArrowRight } from "lucide-react";
@@ -9,11 +11,16 @@ const options = [
   { value: "Paiement sur place", label: "Paiement sur place", description: "Disponible" },
 ];
 
-export default function Step2Payment({ prevStep, nextStep }: any) {
+export default function Step2Payment({ formData, setFormData, prevStep, nextStep }: any) {
   return (
     <>
       <h2 className="pb-4 text-lg font-semibold">2. Mode de paiement</h2>
-      <RadioGroup.Root defaultValue={options[0].value} className="mb-16 w-full grid grid-cols-3 gap-4">
+
+      <RadioGroup.Root
+        value={formData.paymentMethod || options[0].value}
+        onValueChange={(value) => setFormData({ ...formData, paymentMethod: value })}
+        className="mb-16 w-full grid grid-cols-3 gap-4"
+      >
         {options.map((option) => (
           <RadioGroup.Item
             key={option.value}
@@ -30,8 +37,11 @@ export default function Step2Payment({ prevStep, nextStep }: any) {
           </RadioGroup.Item>
         ))}
       </RadioGroup.Root>
+
       <div className="flex justify-between">
-        <Button className="p-6 rounded-full" onClick={prevStep} variant="outline">Retour</Button>
+        <Button className="p-6 rounded-full" onClick={prevStep} variant="outline">
+          Retour
+        </Button>
         <Button className="p-6 rounded-full" onClick={nextStep}>
           <span>Continue</span>
           <ArrowRight />
