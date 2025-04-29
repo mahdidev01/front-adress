@@ -31,7 +31,6 @@ interface Listing {
   image: string;
 }
 
-
 const HomePage = () => {
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
@@ -107,11 +106,8 @@ const HomePage = () => {
             ) : (
               featured.map((room) => (
                 <Link
-                  href={`https://booking.youradress.com/fr/studios/${
-                    room.id
-                  }-${slugify(room.title)}.html`}
                   key={room.id}
-                  target="_blank"
+                  href={`/room/${room.id}`}
                   className="bg-white shadow-md border rounded-lg transition ease-in hover:scale-90 overflow-hidden"
                 >
                   <div className="relative w-full h-56">
@@ -126,7 +122,7 @@ const HomePage = () => {
                     <h3 className="text-lg font-bold mb-1">{room.title}</h3>
                     <p className="text-sm text-gray-500 mb-2">{room.city}</p>
                     <p className="text-sm text-gray-600 mb-2">
-                    {Number(room.price).toFixed(2)} Dh / night
+                      {Number(room.price).toFixed(2)} Dh / night
                     </p>
                   </div>
                 </Link>

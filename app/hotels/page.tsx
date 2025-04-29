@@ -327,7 +327,6 @@ const HotelListingsPage = () => {
                   }&date_to=${
                     dateRange?.to ? formatDate(dateRange.to) : ""
                   }&location=14`}
-                  target="_blank"
                   onClick={(e) => {
                     // if (!hasDates) {
                     //   e.preventDefault();
