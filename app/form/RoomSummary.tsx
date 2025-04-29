@@ -16,8 +16,8 @@ interface RoomSummaryProps {
 
 const RoomSummary = ({ room, fromDate, toDate, nights }: RoomSummaryProps) => {
   const roomPrice = `${room.price} MAD`;
-  const cleaningFee = "100.00 MAD";
-  const totalPrice = `${room.price * nights + 100} MAD`;
+  const cleaningFee = "0.00 MAD";
+  const totalPrice = `${room.price * nights} MAD`;
 
   return (
     <div className="w-full bg-yellow-400 h-screen flex items-center justify-center">

@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Star } from "lucide-react";
+import Link from "next/link";
 
 const RoomDetailsPage = () => {
   const params = useParams();
@@ -247,14 +248,32 @@ const RoomDetailsPage = () => {
                 <strong>Total nights:</strong> {nights}
               </p>
               <p className="font-semibold text-base sm:text-lg">
-                Total: {(totalPrice * selectedGuests).toFixed(2)} Dh
+                Total: {(totalPrice).toFixed(2)} Dh
               </p>
             </div>
           )}
 
-          <Button className="w-full h-11" disabled={!nights}>
-            Confirmer la réservation
-          </Button>
+          <Link
+            href={{
+              pathname: `/booking/${roomInfo.id}`,
+              query: {
+                date_from: dateFrom,
+                date_to: dateTo,
+                guests: selectedGuests,
+                nights: nights,
+                title: roomInfo.title,
+                city: roomInfo.city,
+                price_per_night: pricePerNight.toFixed(2),
+                totalPrice: totalPrice.toFixed(2),
+                cleaning_fee: 100,
+                image: roomInfo.image,
+              },
+            }}
+          >
+            <Button className="w-full h-11" disabled={!nights}>
+              Confirmer la réservation
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

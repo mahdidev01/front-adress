@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
-import { listings } from "@/app/data/listings";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import Step1ContactInfo from "@/app/form/Step1ContactInfo";
@@ -14,7 +13,6 @@ const FormPage = () => {
   const { id } = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const room = listings.find((listing) => listing.id === Number(id));
 
   const [loading, setLoading] = useState(true);
   const [step, setStep] = useState(1);
@@ -28,19 +26,29 @@ const FormPage = () => {
     expiry: "",
     cvc: "",
     isSigned: false,
+    guests: 1,
   });
 
   const [fromDate, setFromDate] = useState<Date | null>(null);
   const [toDate, setToDate] = useState<Date | null>(null);
 
+  // 🆕 récupérer les données depuis searchParams
+  const title = searchParams.get("title") || "";
+  const city = searchParams.get("city") || "";
+  const pricePerNight = parseFloat(searchParams.get("price_per_night") || "0");
+  const totalPrice = parseFloat(searchParams.get("totalPrice") || "0");
+  const cleaningFee = parseFloat(searchParams.get("cleaning_fee") || "100");
+  const nights = parseInt(searchParams.get("nights") || "0", 10);
+  const image = searchParams.get("image") || "";
+
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1200);
+    const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    const from = searchParams.get("from");
-    const to = searchParams.get("to");
+    const from = searchParams.get("date_from");
+    const to = searchParams.get("date_to");
     const guests = searchParams.get("guests");
 
     if (from) setFromDate(new Date(from));
@@ -48,14 +56,6 @@ const FormPage = () => {
     if (guests) setFormData((prev) => ({ ...prev, guests: Number(guests) }));
   }, [searchParams]);
 
-  const nights =
-    fromDate && toDate
-      ? Math.ceil((toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24))
-      : 0;
-
-  const hotelName = room?.title;
-  const cleaningFee = "100.00 MAD";
-  const totalPrice = `${room ? room.price * nights + 100 : 0} MAD`;
   const houseRules = "Pas de fêtes, pas d'animaux, respect du voisinage.";
   const paymentMethod = "En ligne";
 
@@ -67,14 +67,13 @@ const FormPage = () => {
       alert("Veuillez remplir tous les champs obligatoires.");
       return;
     }
-
     setStep((prev) => prev + 1);
   };
 
   const prevStep = () => setStep((prev) => prev - 1);
   const progress = (step / 3) * 100;
 
-  if (!room) return <div className="p-10 text-center">Chambre introuvable.</div>;
+  if (!title) return <div className="p-10 text-center">Chambre introuvable.</div>;
 
   return (
     <div className="flex flex-col md:flex-row gap-8 justify-between">
@@ -90,7 +89,8 @@ const FormPage = () => {
         </div>
       ) : (
         <>
-          <div className="w-full flex flex-col p-16">
+          {/* Formulaire */}
+          <div className="w-full flex flex-col p-8 sm:p-16">
             <div className="h-2 bg-gray-200 mb-6 rounded-full">
               <div
                 className="h-2 bg-yellow-500 rounded-full"
@@ -118,17 +118,30 @@ const FormPage = () => {
                 formData={formData}
                 setFormData={setFormData}
                 nights={nights}
-                totalPrice={totalPrice}
+                totalPrice={`${totalPrice.toFixed(2)} MAD`}
                 houseRules={houseRules}
                 paymentMethod={paymentMethod}
-                hotelName={hotelName}
+                hotelName={title}
                 prevStep={prevStep}
                 router={router}
               />
             )}
           </div>
 
-          <RoomSummary room={room} fromDate={fromDate} toDate={toDate} nights={nights} />
+          {/* Résumé de la réservation */}
+          <RoomSummary
+            room={{
+              title,
+              city,
+              price: pricePerNight,
+              image,
+            }}
+            fromDate={fromDate}
+            toDate={toDate}
+            nights={nights}
+            cleaningFee={cleaningFee}
+            totalPrice={totalPrice}
+          />
         </>
       )}
     </div>
