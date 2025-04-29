@@ -37,6 +37,8 @@ export default function Step4Confirmation({
 
     try {
       const today = new Date();
+      console.log('data xml : ',formData);
+      const totalPriceNumber = parseFloat(totalPrice.toString().replace(/[^\d.-]/g, ""));
       const bookingXml = `
         <prestashop>
   <booking>
@@ -44,18 +46,18 @@ export default function Step4Confirmation({
     <currency>MAD</currency> <!-- Monnaie -->
     <booking_status>2</booking_status> <!-- Status réservation -->
     <payment_status>2</payment_status> <!-- Pas encore payé -->
-    <source>booking.youradress.com</source> <!-- Origine de la réservation -->
-    <booking_date>2025-04-28</booking_date> <!-- Date de réservation (peut être today) -->
+    <source>youradress.com</source> <!-- Origine de la réservation -->
+    <booking_date>${new Date().toISOString().split("T")[0]}</booking_date> <!-- Date de réservation (peut être today) -->
     <remark>Test réservation API</remark>
     <id_language>1</id_language>
 
     <associations>
       <customer_detail>
-        <id_customer>2</id_customer> <!-- Client existant dans ta base -->
-        <firstname>mahdi</firstname>
-        <lastname>lasana</lastname>
-        <email>e.mahdimiftah@gmail.com</email>
-        <phone>0612345678</phone>
+        <id_customer></id_customer> <!-- Client existant dans ta base -->
+        <firstname>${formData.name}</firstname>
+        <lastname>${formData.surname}</lastname>
+        <email>${formData.email}</email>
+        <phone>${formData.phone}</phone>
         <address>Rue des Fleurs</address>
         <city>Casablanca</city>
         <zip>20000</zip>
@@ -64,32 +66,24 @@ export default function Step4Confirmation({
       </customer_detail>
 
       <price_details>
-        <total_paid>1000.00</total_paid> <!-- 0 = gratuit pour test -->
-        <total_price_with_tax>1000.00</total_price_with_tax> <!-- Prix total -->
+        <total_paid>${totalPriceNumber}</total_paid> <!-- 0 = gratuit pour test -->
+        <total_price_with_tax>${totalPriceNumber}</total_price_with_tax> <!-- Prix total -->
       </price_details>
 
       <payment_detail>
         <payment_type>online</payment_type> <!-- Paiement sur place (test) -->
-        <payment_method>cash</payment_method> <!-- Mode : cash -->
-        <transaction_id>fdfdf454544</transaction_id> <!-- ID factice -->
+        <payment_method>cmi</payment_method> <!-- Mode : cash -->
+        <transaction_id></transaction_id> <!-- ID factice -->
       </payment_detail>
 
       <room_types>
         <room_type>
-          <id_room_type>11</id_room_type> <!-- ID du type de chambre -->
-          <checkin_date>2025-07-12</checkin_date> <!-- Date arrivée -->
-          <checkout_date>2025-07-14</checkout_date> <!-- Date départ -->
+          <id_room_type>${formData.roomId}</id_room_type> <!-- ID du type de chambre -->
+          <checkin_date>${formData.date_from}</checkin_date> <!-- Date arrivée -->
+          <checkout_date>${formData.date_to}</checkout_date> <!-- Date départ -->
           <number_of_rooms>1</number_of_rooms>
           <rooms>
-            <room>
-              <id_room>21</id_room> <!-- ID chambre (optionnel sinon système choisira) -->
-              <adults>2</adults>
-              <child>0</child>
-              <child_ages></child_ages>
-              <unit_price_without_tax>166.66</unit_price_without_tax> <!-- Exemple prix -->
-              <id_tax_rules_group>1</id_tax_rules_group>
-              <total_tax>100.00</total_tax>
-            </room>
+
           </rooms>
         </room_type>
       </room_types>

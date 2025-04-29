@@ -25,6 +25,7 @@ export default function Step2Payment({ formData, setFormData, prevStep, nextStep
           <RadioGroup.Item
             key={option.value}
             value={option.value}
+            onClick={() => setFormData({ ...formData, paymentType: option.value })}
             className={cn(
               "relative group ring-[1px] ring-border rounded py-2 px-3 text-start",
               "data-[state=checked]:ring-2 data-[state=checked]:ring-yellow-500"
