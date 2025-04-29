@@ -77,8 +77,8 @@ export default function Step4Confirmation({
       <room_types>
         <room_type>
           <id_room_type>11</id_room_type> <!-- ID du type de chambre -->
-          <checkin_date>2025-06-15</checkin_date> <!-- Date arrivée -->
-          <checkout_date>2025-06-16</checkout_date> <!-- Date départ -->
+          <checkin_date>2025-07-12</checkin_date> <!-- Date arrivée -->
+          <checkout_date>2025-07-14</checkout_date> <!-- Date départ -->
           <number_of_rooms>1</number_of_rooms>
           <rooms>
             <room>

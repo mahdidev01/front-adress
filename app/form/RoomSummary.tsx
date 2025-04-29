@@ -12,6 +12,7 @@ interface RoomSummaryProps {
   fromDate: Date | null;
   toDate: Date | null;
   nights: number;
+  totalPrice: number;
 }
 
 const RoomSummary = ({ room, fromDate, toDate, nights }: RoomSummaryProps) => {

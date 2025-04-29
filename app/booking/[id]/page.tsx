@@ -37,7 +37,7 @@ const FormPage = () => {
   const city = searchParams.get("city") || "";
   const pricePerNight = parseFloat(searchParams.get("price_per_night") || "0");
   const totalPrice = parseFloat(searchParams.get("totalPrice") || "0");
-  const cleaningFee = parseFloat(searchParams.get("cleaning_fee") || "100");
+  // const cleaningFee = parseFloat(searchParams.get("cleaning_fee") || "100");
   const nights = parseInt(searchParams.get("nights") || "0", 10);
   const image = searchParams.get("image") || "";
 
@@ -145,14 +145,13 @@ const FormPage = () => {
           <RoomSummary
             room={{
               title,
-              city,
+              address: city,
               price: pricePerNight,
-              image,
+              imageUrl: image,
             }}
             fromDate={fromDate}
             toDate={toDate}
             nights={nights}
-            cleaningFee={cleaningFee}
             totalPrice={totalPrice}
           />
         </>
