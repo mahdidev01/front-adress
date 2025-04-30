@@ -37,7 +37,7 @@ const ReservationPage = () => {
             <CheckCircle2 className="text-green-500 mx-auto mb-4" size={48} />
             <h1 className="text-2xl font-bold mb-2">Réservation confirmée !</h1>
             <p className="text-gray-700 mb-6">
-              Merci pour votre réservation. Un email de confirmation vous a été envoyé.
+              Merci pour votre réservation. Un email de confirmation avec une facture vous a été envoyé.
             </p>
 
             <div className="text-left text-sm border-t pt-4 text-gray-600">

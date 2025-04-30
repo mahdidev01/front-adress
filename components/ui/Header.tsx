@@ -27,7 +27,7 @@ const Header = () => {
         </nav>
 
         <div className="hidden md:flex gap-4 items-center">
-          {/* {session ? (
+          {session ? (
             <>
               <Link href="/espace-client">
                 <Button className="flex items-center gap-2">
@@ -42,7 +42,7 @@ const Header = () => {
               <Link href="/login"><Button>Sign in</Button></Link>
               <Link href="/login"><Button variant="outline">Sign up</Button></Link>
             </>
-          )} */}
+          )}
         </div>
 
         <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-gray-700 hover:text-yellow-500">

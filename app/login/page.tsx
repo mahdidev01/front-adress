@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,16 +16,29 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: form.email,
-      password: form.password,
-    });
+    try {
+      const res = await fetch("https://booking.youradress.com/module/apirooms/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
 
-    if (error) {
-      toast.error("Échec de la connexion. Vérifiez vos identifiants.");
-    } else {
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        toast.error(data.message || "Échec de la connexion.");
+        setLoading(false);
+        return;
+      }
+
+      // ✅ Stocker l’utilisateur localement
+      localStorage.setItem("customer", JSON.stringify(data));
+
       toast.success("Connexion réussie !");
       router.push("/espace-client");
+    } catch (err) {
+      console.error("Erreur login:", err);
+      toast.error("Erreur serveur. Réessayez.");
     }
 
     setLoading(false);
@@ -34,12 +46,13 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
-      {/* Left: Login Form */}
       <div className="flex items-center justify-center p-8 bg-white">
         <div className="w-full max-w-md space-y-6">
           <div className="text-center">
             <h1 className="text-3xl font-bold text-gray-800">Se connecter</h1>
-            <p className="text-sm text-gray-500 mt-2">Connectez-vous à votre compte YourAdress</p>
+            <p className="text-sm text-gray-500 mt-2">
+              Connectez-vous à votre compte YourAdress
+            </p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
@@ -71,10 +84,9 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Right: Image */}
       <div className="relative hidden md:block">
         <Image
-          src="/images/gallery/casa.avif" // 💡 Put your image in public/images/login-bg.jpg
+          src="/images/gallery/casa.avif"
           alt="Login background"
           fill
           className="object-cover"
