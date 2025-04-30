@@ -87,7 +87,7 @@ export default function EspaceClientPage() {
               <p className="text-sm mt-1">
                 Du {format(new Date(b.date_from), "dd MMM yyyy")} au {format(new Date(b.date_to), "dd MMM yyyy")}
               </p>
-              <p className="text-sm">{parseFloat(b.total_paid_amount).toFixed(2)} MAD</p>
+              <p className="text-sm">{Number(b.total_paid_amount).toFixed(2)} MAD</p>
               <div className="mt-4">
                 <Link href={`/room/${b.id}`}>
                   <Button variant="outline">Voir les détails</Button>
@@ -115,7 +115,7 @@ export default function EspaceClientPage() {
               <p className="text-sm mt-1">
                 Du {format(new Date(b.date_from), "dd MMM yyyy")} au {format(new Date(b.date_to), "dd MMM yyyy")}
               </p>
-              <p className="text-sm">{parseFloat(b.total_paid_amount).toFixed(2)} MAD</p>
+              <p className="text-sm">{Number(b.total_paid_amount).toFixed(2)} MAD</p>
             </CardContent>
           </Card>
         ))
