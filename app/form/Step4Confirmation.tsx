@@ -118,9 +118,9 @@ export default function Step4Confirmation({
           );
           return;
         }
-
+        const email = formData.email;
         // ✅ Même s'il y a <errors>, on considère la réservation OK
-        router.push("/reservation");
+        router.push(`/reservation?email=${encodeURIComponent(email)}`);
       } catch (error) {
         console.error("Erreur réseau :", error);
         alert("Erreur réseau, impossible de créer la réservation.");
@@ -130,7 +130,6 @@ export default function Step4Confirmation({
       alert("Erreur réseau, impossible de créer la réservation.");
     }
 
-    router.push("/reservation");
   };
 
   return (

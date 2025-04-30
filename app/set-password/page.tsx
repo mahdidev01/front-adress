@@ -1,15 +1,21 @@
-// /app/set-password/page.tsx
 "use client";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SetPasswordPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const emailParam = searchParams.get("email") || "";
 
-  const [email, setEmail] = useState(emailParam);
+  const [email, setEmail] = useState(""); // initially empty string
   const [password, setPassword] = useState("");
+
+  // ✅ Get email from searchParams once they are available
+  useEffect(() => {
+    const emailParam = searchParams.get("email");
+    if (emailParam) {
+      setEmail(emailParam);
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

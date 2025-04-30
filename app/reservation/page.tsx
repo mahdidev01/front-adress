@@ -5,9 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 const ReservationPage = () => {
   const [loading, setLoading] = useState(true);
+  const searchParams = useSearchParams(); // ✅ move here
+  const email = searchParams.get("email");
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1200);
@@ -50,8 +53,15 @@ const ReservationPage = () => {
               <Link href="/">
                 <Button className="rounded-full px-6">Retour à l'accueil</Button>
               </Link>
-              <Link href="/hotels">
-                <Button variant="outline" className="rounded-full px-6">Voir d'autres logements</Button>
+              <Link
+                href={{
+                  pathname: "/set-password",
+                  query: { email: email || "" },
+                }}
+              >
+                <Button variant="secondary" className="rounded-full px-6">
+                  Définir mon mot de passe
+                </Button>
               </Link>
             </div>
           </>
