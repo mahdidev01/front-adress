@@ -46,7 +46,7 @@ const Header = () => {
           <Link href="/" className="text-gray-700 hover:text-yellow-500">
             Accueil
           </Link>
-          <Link href="/hotels" className="text-gray-700 hover:text-yellow-500">
+          <Link href="#" className="text-gray-700 hover:text-yellow-500">
             Hebergements
           </Link>
           <Link href="/about" className="text-gray-700 hover:text-yellow-500">
@@ -58,31 +58,11 @@ const Header = () => {
         </nav>
 
         <div className="hidden md:flex gap-4 items-center">
-          {isLoggedIn ? (
-            <>
-              <span className="text-sm text-gray-600">
-                Bonjour, {customer.firstname}
-              </span>
-              <Link href="/espace-client">
-                <Button className="flex items-center gap-2">
-                  <CalendarDays className="w-5 h-5" />
-                  Mes réservations
-                </Button>
-              </Link>
-              <Button variant="outline" onClick={handleLogout}>
-                Se déconnecter
-              </Button>
-            </>
-          ) : (
-            <>
-              <Link href="/login">
-                <Button>Se connecter</Button>
-              </Link>
-              <Link href="/login">
-                <Button variant="outline">Créer un compte</Button>
-              </Link>
-            </>
-          )}
+          <Link
+            href="https://youradress.hotelrunner.com/bv3/search"
+          >
+            <Button className="w-full">Réserver</Button>
+          </Link>
         </div>
 
         <button
@@ -99,7 +79,7 @@ const Header = () => {
             <Link href="/" onClick={() => setIsOpen(false)}>
               Accueil
             </Link>
-            <Link href="/hotels" onClick={() => setIsOpen(false)}>
+            <Link href="#" onClick={() => setIsOpen(false)}>
               Hebergements
             </Link>
             <Link href="/about" onClick={() => setIsOpen(false)}>
@@ -110,34 +90,11 @@ const Header = () => {
             </Link>
           </nav>
           <div className="flex flex-col gap-2">
-            {isLoggedIn ? (
-              <>
-                <Link href="/espace-client" onClick={() => setIsOpen(false)}>
-                  <Button className="w-full">Mes réservations</Button>
-                </Link>
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => {
-                    handleLogout();
-                    setIsOpen(false);
-                  }}
-                >
-                  Se déconnecter
-                </Button>
-              </>
-            ) : (
-              <>
-                <Link href="/login" onClick={() => setIsOpen(false)}>
-                  <Button className="w-full">Se connecter</Button>
-                </Link>
-                <Link href="/login" onClick={() => setIsOpen(false)}>
-                  <Button variant="outline" className="w-full">
-                    Créer un compte
-                  </Button>
-                </Link>
-              </>
-            )}
+            <Link
+              href="https://youradress.hotelrunner.com/bv3/search"
+            >
+              <Button className="w-full">Réserver</Button>
+            </Link>
           </div>
         </div>
       )}

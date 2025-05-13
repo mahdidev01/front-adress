@@ -75,12 +75,12 @@ const HomePage = () => {
           <p className="text-lg md:text-xl text-white/90 mb-6 max-w-xl">
             Discover and book charming places to stay across Morocco
           </p>
-          <Link href="/hotels">
+          <div>
             <SearchFilter />
+          </div>
             {/* <Button className="text-lg px-12 py-6 rounded-full bg-white text-black hover:bg-gray-200 transition">
               Browse All Stays
             </Button> */}
-          </Link>
         </div>
       </section>
 
@@ -91,12 +91,12 @@ const HomePage = () => {
         <div className="sticky top-20 z-10 animate-fade-in bg-white p-6 rounded-xl shadow-md">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-semibold">Featured Stays</h2>
-            <Link
+            {/* <Link
               href="/hotels"
               className="text-yellow-600 hover:underline text-sm font-medium"
             >
               View All
-            </Link>
+            </Link> */}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {loading ? (

@@ -55,7 +55,7 @@ const RoomDetailsPage = () => {
     }
   );
 
-  const [selectedGuests, setSelectedGuests] = useState<number>(1);
+  const [selectedGuests, setSelectedGuests] = useState<number>(2);
   const [roomInfo, setRoomInfo] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
@@ -309,7 +309,7 @@ const RoomDetailsPage = () => {
           </p>
 
           {/* Guests */}
-          {/* <div>
+          <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Guests
             </label>
@@ -325,17 +325,17 @@ const RoomDetailsPage = () => {
                 />
               </SelectTrigger>
               <SelectContent>
-                {[...Array(10)].map((_, i) => (
+                {[...Array(4)].map((_, i) => (
                   <SelectItem key={i + 1} value={(i + 1).toString()}>
-                    {i + 1} Guest{i + 1 > 1 ? "s" : ""}
+                    {i + 1}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-          </div> */}
+          </div>
 
           {/* Date Picker */}
-          {/* <div>
+          <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Dates
             </label>
@@ -377,10 +377,10 @@ const RoomDetailsPage = () => {
                 />
               </PopoverContent>
             </Popover>
-          </div> */}
+          </div>
 
           {/* Price Summary */}
-          {nights > 0 && (
+          {/* {nights > 0 && (
             <div className="text-sm">
               <p className="mb-1">
                 <strong>Total nights:</strong> {nights}
@@ -389,18 +389,23 @@ const RoomDetailsPage = () => {
                 Total: {totalPrice.toFixed(2)} Dh
               </p>
             </div>
-          )}
+          )} */}
           <a
-            href={`https://youradress.hotelrunner.com/bv3/search`}
-            target="_blank"
+            href={`https://youradress.hotelrunner.com/bv3/search${
+              selectedRange?.from && selectedRange?.to
+                ? `?checkin_date=${formatDate(
+                    selectedRange.from
+                  )}&checkout_date=${formatDate(selectedRange.to)}&adult_count=${selectedGuests}`
+                : ""
+            }`}
             rel="noopener noreferrer"
-            // onClick={(e) => {
-            //   if (!selectedRange?.from || !selectedRange?.to) {
-            //     e.preventDefault();
-            //     setDateError(true);
-            //     setOpenCalendar(true);
-            //   }
-            // }}
+            onClick={(e) => {
+              if (!selectedRange?.from || !selectedRange?.to) {
+                e.preventDefault();
+                setDateError(true);
+                setOpenCalendar(true);
+              }
+            }}
           >
             <Button className="w-full h-11">Réserver maintenant</Button>
           </a>

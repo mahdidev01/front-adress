@@ -22,16 +22,7 @@ import {
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 
-const moroccanCities = [
-  "Casablanca",
-  "Rabat",
-  "Marrakech",
-  "Tangier",
-  "Agadir",
-  "Fes",
-  "Oujda",
-  "Tetouan",
-];
+const moroccanCities = ["Casablanca"];
 
 const formatDate = (date: Date | undefined) =>
   date ? format(date, "MMM dd, yyyy") : "";
@@ -47,11 +38,19 @@ export const SearchFilter = () => {
     const query = new URLSearchParams();
 
     if (selectedCity) query.append("city", selectedCity);
-    if (guestFilter) query.append("guests", guestFilter.toString());
-    if (dateRange?.from) query.append("from", dateRange.from.toISOString());
-    if (dateRange?.to) query.append("to", dateRange.to.toISOString());
+    if (guestFilter) query.append("adult_count", guestFilter.toString());
+    if (dateRange?.from) {
+      const checkin = dateRange.from.toLocaleDateString("en-CA"); // YYYY-MM-DD sans UTC
+      query.append("checkin_date", checkin);
+    }
+    if (dateRange?.to) {
+      const checkout = dateRange.to.toLocaleDateString("en-CA"); // YYYY-MM-DD sans UTC
+      query.append("checkout_date", checkout);
+    }
 
-    // router.push(`/hotels?${query.toString()}`);
+    const fullUrl = `https://youradress.hotelrunner.com/bv3/search?${query.toString()}`;
+
+    window.location.href = fullUrl;
   };
 
   return (
@@ -88,7 +87,7 @@ export const SearchFilter = () => {
             <SelectValue placeholder="Guests" />
           </SelectTrigger>
           <SelectContent>
-            {[...Array(8).keys()].map((num) => (
+            {[...Array(4).keys()].map((num) => (
               <SelectItem key={num + 1} value={(num + 1).toString()}>
                 {num + 1}
               </SelectItem>
@@ -132,20 +131,10 @@ export const SearchFilter = () => {
 
       {/* Search Button */}
       <div className="w-full md:w-auto">
-        <a
-          href="https://youradress.hotelrunner.com/bv3/search"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Button className="w-full md:w-auto h-11">Réserver maintenant</Button>
-        </a>
-      </div>
-
-      {/* <div className="w-full md:w-auto">
         <Button onClick={handleSearch} className="w-full md:w-auto h-11">
-          Réserver maintenant
+          Search
         </Button>
-      </div> */}
+      </div>
     </div>
   );
 };
