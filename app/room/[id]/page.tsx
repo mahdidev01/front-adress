@@ -43,7 +43,6 @@ const RoomDetailsPage = () => {
   const [openCalendar, setOpenCalendar] = useState(false);
   const [dateError, setDateError] = useState(false);
 
-
   const [selectedRange, setSelectedRange] = useState<DateRange | undefined>(
     () => {
       if (dateFrom && dateTo) {
@@ -94,18 +93,14 @@ const RoomDetailsPage = () => {
     const map = new mapboxgl.Map({
       container: "map",
       style: "mapbox://styles/mapbox/streets-v12",
-      center: [-7.589843, 33.573110], // Casablanca
+      center: [-7.589843, 33.57311], // Casablanca
       zoom: 15,
     });
 
-    new mapboxgl.Marker()
-      .setLngLat([-7.589843, 33.573110])
-      .addTo(map);
+    new mapboxgl.Marker().setLngLat([-7.589843, 33.57311]).addTo(map);
 
     return () => map.remove();
   }, [loading]);
-
-
 
   if (loading) return <div className="p-6 text-center">Loading...</div>;
   if (!roomInfo)
@@ -119,9 +114,9 @@ const RoomDetailsPage = () => {
   const nights =
     selectedRange?.from && selectedRange?.to
       ? Math.ceil(
-        (selectedRange.to.getTime() - selectedRange.from.getTime()) /
-        (1000 * 3600 * 24)
-      )
+          (selectedRange.to.getTime() - selectedRange.from.getTime()) /
+            (1000 * 3600 * 24)
+        )
       : 0;
 
   const pricePerNight = parseFloat(roomInfo.price_per_night || "0");
@@ -131,35 +126,67 @@ const RoomDetailsPage = () => {
     <div className="container mx-auto px-4 py-10">
       {/* Carousel */}
       <div className="relative mb-8">
-        <div
-          ref={sliderRef}
-          className="keen-slider rounded-xl overflow-hidden aspect-square sm:aspect-[4/3] md:aspect-[16/9]"
-        >
-          {roomInfo.image_urls?.length > 0 ? (
+        <div ref={sliderRef} className="keen-slider rounded-xl overflow-hidden">
+          {(roomInfo.image_urls?.length ?? 0) > 0 ? (
             roomInfo.image_urls.map((url: string, index: number) => (
               <div
                 key={index}
                 className="keen-slider__slide relative w-full h-full"
               >
-                <Image
-                  src={url}
-                  alt={`${roomInfo.title} ${index + 1}`}
-                  fill
-                  className="object-cover w-full h-full"
-                  style={{ objectPosition: "center" }}
-                  sizes="(max-width: 768px) 100vw, 800px"
-                />
+                {/* Blurred Background */}
+                <div className="absolute inset-0 z-0">
+                  <Image
+                    src={url}
+                    alt=""
+                    fill
+                    className="object-cover blur-2xl scale-110"
+                    style={{ objectPosition: "center" }}
+                  />
+                  {/* Optional soft overlay */}
+                  <div className="absolute inset-0 bg-white/20 backdrop-blur-sm" />
+                </div>
+
+                {/* Foreground Image (with aspect control) */}
+                <div className="relative z-10 flex items-center justify-center w-full h-full px-4">
+                  <div className="relative w-full max-w-[1000px] h-[70vh]">
+                    <Image
+                      src={url}
+                      alt={`${roomInfo.title} ${index + 1}`}
+                      fill
+                      className="object-contain"
+                      style={{ objectPosition: "center" }}
+                      sizes="(max-width: 768px) 100vw, 800px"
+                    />
+                  </div>
+                </div>
               </div>
             ))
           ) : (
             <div className="keen-slider__slide relative w-full h-full">
-              <Image
-                src={roomInfo.image}
-                alt={roomInfo.title}
-                fill
-                className="object-cover w-full h-full"
-                style={{ objectPosition: "center" }}
-              />
+              <div className="absolute inset-0 z-0">
+                <Image
+                  src={roomInfo.image}
+                  alt=""
+                  fill
+                  className="object-cover blur-2xl scale-110"
+                  style={{ objectPosition: "center" }}
+                />
+                <div className="absolute inset-0 bg-white/20 backdrop-blur-sm" />
+              </div>
+
+              <div className="relative z-10 flex items-center justify-center w-full h-full px-4">
+                <div className="relative w-full max-w-[1000px]">
+                  <div className="relative aspect-[4/3] w-full h-auto">
+                    <Image
+                      src={roomInfo.image}
+                      alt={roomInfo.title}
+                      fill
+                      className="object-contain"
+                      style={{ objectPosition: "center" }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -167,7 +194,7 @@ const RoomDetailsPage = () => {
         {/* Navigation Buttons */}
         <button
           onClick={() => slider.current?.prev()}
-          className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md z-10"
+          className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md z-20"
         >
           <svg
             className="w-5 h-5 text-gray-800"
@@ -176,13 +203,17 @@ const RoomDetailsPage = () => {
             strokeWidth="2"
             viewBox="0 0 24 24"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
         </button>
 
         <button
           onClick={() => slider.current?.next()}
-          className="absolute top-1/2 right-4 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md z-10"
+          className="absolute top-1/2 right-4 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md z-20"
         >
           <svg
             className="w-5 h-5 text-gray-800"
@@ -191,11 +222,14 @@ const RoomDetailsPage = () => {
             strokeWidth="2"
             viewBox="0 0 24 24"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 5l7 7-7 7"
+            />
           </svg>
         </button>
       </div>
-
 
       {/* Info & Sidebar */}
       <div className="flex flex-col lg:flex-row justify-between gap-10">
@@ -208,8 +242,9 @@ const RoomDetailsPage = () => {
             {[...Array(5)].map((_, i) => (
               <Star
                 key={i}
-                className={`w-4 h-4 ${i < 4 ? "text-yellow-400" : "text-gray-300"
-                  }`}
+                className={`w-4 h-4 ${
+                  i < 4 ? "text-yellow-400" : "text-gray-300"
+                }`}
                 fill={i < 4 ? "currentColor" : "none"}
               />
             ))}
@@ -224,7 +259,9 @@ const RoomDetailsPage = () => {
             <div className="mb-6 mt-6">
               <h3 className="text-lg font-semibold mb-2">Capacité maximale</h3>
               <p className="text-gray-700">
-                Cet hébergement peut accueillir jusqu’à <strong>{roomInfo.max_guests}</strong> personne{roomInfo.max_guests > 1 ? "s" : ""}.
+                Cet hébergement peut accueillir jusqu’à{" "}
+                <strong>{roomInfo.max_guests}</strong> personne
+                {roomInfo.max_guests > 1 ? "s" : ""}.
               </p>
             </div>
           )}
@@ -242,7 +279,11 @@ const RoomDetailsPage = () => {
                       strokeWidth="2"
                       viewBox="0 0 24 24"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                     {feature}
                   </li>
@@ -256,8 +297,6 @@ const RoomDetailsPage = () => {
             <h3 className="text-lg font-semibold mb-3"></h3>
             <div className="rounded-xl overflow-hidden h-[300px]" id="map" />
           </div>
-
-
         </div>
 
         {/* Sidebar */}
@@ -270,7 +309,7 @@ const RoomDetailsPage = () => {
           </p>
 
           {/* Guests */}
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Guests
             </label>
@@ -280,8 +319,9 @@ const RoomDetailsPage = () => {
             >
               <SelectTrigger className="h-11 w-full">
                 <SelectValue
-                  placeholder={`${selectedGuests} Guest${selectedGuests > 1 ? "s" : ""
-                    }`}
+                  placeholder={`${selectedGuests} Guest${
+                    selectedGuests > 1 ? "s" : ""
+                  }`}
                 />
               </SelectTrigger>
               <SelectContent>
@@ -292,10 +332,10 @@ const RoomDetailsPage = () => {
                 ))}
               </SelectContent>
             </Select>
-          </div>
+          </div> */}
 
           {/* Date Picker */}
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Dates
             </label>
@@ -304,15 +344,23 @@ const RoomDetailsPage = () => {
                 <div className="flex gap-2">
                   <Input
                     placeholder="Arrivée"
-                    value={selectedRange?.from ? formatDate(selectedRange.from) : ""}
+                    value={
+                      selectedRange?.from ? formatDate(selectedRange.from) : ""
+                    }
                     readOnly
-                    className={`h-11 ${dateError && !selectedRange?.from ? "border-red-500" : ""}`}
+                    className={`h-11 ${
+                      dateError && !selectedRange?.from ? "border-red-500" : ""
+                    }`}
                   />
                   <Input
                     placeholder="Départ"
-                    value={selectedRange?.to ? formatDate(selectedRange.to) : ""}
+                    value={
+                      selectedRange?.to ? formatDate(selectedRange.to) : ""
+                    }
                     readOnly
-                    className={`h-11 ${dateError && !selectedRange?.to ? "border-red-500" : ""}`}
+                    className={`h-11 ${
+                      dateError && !selectedRange?.to ? "border-red-500" : ""
+                    }`}
                   />
                 </div>
               </PopoverTrigger>
@@ -329,8 +377,7 @@ const RoomDetailsPage = () => {
                 />
               </PopoverContent>
             </Popover>
-
-          </div>
+          </div> */}
 
           {/* Price Summary */}
           {nights > 0 && (
@@ -343,8 +390,22 @@ const RoomDetailsPage = () => {
               </p>
             </div>
           )}
+          <a
+            href={`https://youradress.hotelrunner.com/bv3/search`}
+            target="_blank"
+            rel="noopener noreferrer"
+            // onClick={(e) => {
+            //   if (!selectedRange?.from || !selectedRange?.to) {
+            //     e.preventDefault();
+            //     setDateError(true);
+            //     setOpenCalendar(true);
+            //   }
+            // }}
+          >
+            <Button className="w-full h-11">Réserver maintenant</Button>
+          </a>
 
-          <Link
+          {/* <Link
             href={{
               pathname: `/booking/${roomInfo.id}`,
               query: {
@@ -374,15 +435,25 @@ const RoomDetailsPage = () => {
                 }
 
                 router.push(
-                  `/booking/${roomInfo.id}?date_from=${formatDate(selectedRange.from)}&date_to=${formatDate(selectedRange.to)}&guests=${selectedGuests}&nights=${nights}&title=${roomInfo.title}&city=${roomInfo.city}&price_per_night=${pricePerNight.toFixed(2)}&totalPrice=${totalPrice.toFixed(2)}&cleaning_fee=100&image=${roomInfo.image}`
+                  `/booking/${roomInfo.id}?date_from=${formatDate(
+                    selectedRange.from
+                  )}&date_to=${formatDate(
+                    selectedRange.to
+                  )}&guests=${selectedGuests}&nights=${nights}&title=${
+                    roomInfo.title
+                  }&city=${
+                    roomInfo.city
+                  }&price_per_night=${pricePerNight.toFixed(
+                    2
+                  )}&totalPrice=${totalPrice.toFixed(
+                    2
+                  )}&cleaning_fee=100&image=${roomInfo.image}`
                 );
-                
               }}
             >
-              Confirmer la réservation
+              Réservation maintenant
             </Button>
-
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

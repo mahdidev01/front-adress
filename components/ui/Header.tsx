@@ -35,7 +35,11 @@ const Header = () => {
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <Link href="/" className="text-xl font-bold text-black">
-          YourAdress
+          <img
+            src="/logo.png" // 🖼️ Remplace par le bon chemin relatif vers ton logo
+            alt="YourAdress Logo"
+            className="w-[90px] h-auto"
+          />
         </Link>
 
         <nav className="space-x-6 hidden md:flex">

@@ -51,19 +51,21 @@ export const SearchFilter = () => {
     if (dateRange?.from) query.append("from", dateRange.from.toISOString());
     if (dateRange?.to) query.append("to", dateRange.to.toISOString());
 
-    router.push(`/hotels?${query.toString()}`);
+    // router.push(`/hotels?${query.toString()}`);
   };
 
   return (
     <div className="w-full bg-white border rounded-xl shadow-md p-6 space-y-4 md:space-y-0 md:flex md:items-end md:flex-wrap md:gap-4">
       {/* City Selector */}
       <div className="w-full md:w-[200px] text-black">
-        <label className="block text-sm font-medium text-gray-700 mb-1">Où allez vous ?</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Où allez vous ?
+        </label>
         <Select onValueChange={setSelectedCity} value={selectedCity}>
           <SelectTrigger className="w-full h-11 px-4">
             <SelectValue placeholder="Select your stay" />
           </SelectTrigger>
-          <SelectContent >
+          <SelectContent>
             {moroccanCities.map((city) => (
               <SelectItem key={city} value={city}>
                 {city}
@@ -75,8 +77,13 @@ export const SearchFilter = () => {
 
       {/* Guests Selector */}
       <div className="w-full md:w-[150px]">
-        <label className="block text-sm font-medium text-gray-700 mb-1">Guests</label>
-        <Select onValueChange={(val) => setGuestFilter(Number(val))} value={guestFilter?.toString() ?? ""}>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Guests
+        </label>
+        <Select
+          onValueChange={(val) => setGuestFilter(Number(val))}
+          value={guestFilter?.toString() ?? ""}
+        >
           <SelectTrigger className="w-full h-11 px-4 text-black">
             <SelectValue placeholder="Guests" />
           </SelectTrigger>
@@ -92,7 +99,9 @@ export const SearchFilter = () => {
 
       {/* Date Picker */}
       <div className="w-full md:w-[300px]">
-        <label className="block text-sm font-medium text-gray-700 mb-1">Dates</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Dates
+        </label>
         <Popover>
           <PopoverTrigger asChild>
             <div className="flex gap-2">
@@ -123,10 +132,20 @@ export const SearchFilter = () => {
 
       {/* Search Button */}
       <div className="w-full md:w-auto">
-        <Button onClick={handleSearch} className="w-full md:w-auto h-11">
-          Search
-        </Button>
+        <a
+          href="https://youradress.hotelrunner.com/bv3/search"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button className="w-full md:w-auto h-11">Réserver maintenant</Button>
+        </a>
       </div>
+
+      {/* <div className="w-full md:w-auto">
+        <Button onClick={handleSearch} className="w-full md:w-auto h-11">
+          Réserver maintenant
+        </Button>
+      </div> */}
     </div>
   );
 };

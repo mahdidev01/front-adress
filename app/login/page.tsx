@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -31,9 +32,7 @@ export default function LoginPage() {
         return;
       }
 
-      // ✅ Stocker l’utilisateur localement
       localStorage.setItem("customer", JSON.stringify(data));
-
       toast.success("Connexion réussie !");
       router.push("/espace-client");
     } catch (err) {
@@ -42,6 +41,19 @@ export default function LoginPage() {
     }
 
     setLoading(false);
+  };
+
+  const handleGoogleLogin = async () => {
+    const result = await signIn("google", {
+      redirect: false,
+      callbackUrl: "/espace-client",
+    });
+
+    if (result?.ok) {
+      router.push("/espace-client");
+    } else {
+      toast.error("Connexion Google échouée.");
+    }
   };
 
   return (
@@ -74,6 +86,13 @@ export default function LoginPage() {
               {loading ? "Connexion..." : "Se connecter"}
             </Button>
           </form>
+
+          <div className="text-center">
+            <p className="text-sm text-gray-500 mb-2">Ou</p>
+            <Button type="button" className="w-full" variant="outline" onClick={handleGoogleLogin}>
+              Connexion avec Google
+            </Button>
+          </div>
 
           <p className="text-sm text-center text-gray-500">
             Vous n’avez pas de compte ?{" "}

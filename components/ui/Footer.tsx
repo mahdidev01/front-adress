@@ -15,20 +15,34 @@ const Footer = () => {
         </div>
 
         <div>
-          <h4 className="font-semibold mb-2">Navigation</h4>
+          <h4 className="font-semibold mb-2">Entreprise</h4>
           <ul className="space-y-1 text-sm text-gray-700">
-            <li><Link href="/">Accueil</Link></li>
-            <li><Link href="/about">À propos</Link></li>
-            <li><Link href="/contact">Contact</Link></li>
+            <li>
+              <Link href="/">Accueil</Link>
+            </li>
+            <li>
+              <Link href="/about">À propos</Link>
+            </li>
+            <li>
+              <Link href="/contact">Contact</Link>
+            </li>
+            <li>
+              <Link href="/conditions-generales-vente">
+                Conditions Générales de Vente
+              </Link>
+            </li>
           </ul>
         </div>
 
         <div>
-          <h4 className="font-semibold mb-2">Suivez-nous</h4>
+          <h4 className="font-semibold mb-2">Contactez-nous</h4>
           <ul className="space-y-1 text-sm text-gray-700">
-            <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
-            <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
-            <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
+            <li>
+              <p className="text-sm text-gray-600">Tel : +212 6 67 29 15 75</p>
+            </li>
+            <li>
+              <p className="text-sm text-gray-600">contact@youradress.com</p>
+            </li>
           </ul>
         </div>
       </div>
