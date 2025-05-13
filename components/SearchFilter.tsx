@@ -124,6 +124,7 @@ export const SearchFilter = () => {
               selected={dateRange}
               onSelect={setDateRange}
               numberOfMonths={2}
+              disabled={{ before: new Date() }}
             />
           </PopoverContent>
         </Popover>
@@ -131,7 +132,7 @@ export const SearchFilter = () => {
 
       {/* Search Button */}
       <div className="w-full md:w-auto">
-        <Button onClick={handleSearch} className="w-full md:w-auto h-11">
+        <Button onClick={handleSearch} className="w-full md:w-auto h-11 bg-[#e1c287] text-white hover:bg-yellow-600 cursor-pointer">
           Search
         </Button>
       </div>

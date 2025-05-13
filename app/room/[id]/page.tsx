@@ -407,7 +407,7 @@ const RoomDetailsPage = () => {
               }
             }}
           >
-            <Button className="w-full h-11">Réserver maintenant</Button>
+            <Button className="w-full h-11 cursor-pointer bg-[#e1c287] text-white hover:bg-yellow-600">Réserver maintenant</Button>
           </a>
 
           {/* <Link

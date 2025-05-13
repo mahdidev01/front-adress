@@ -70,7 +70,7 @@ const HomePage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/10 z-10"></div>
         <div className="relative z-20 h-full flex flex-col justify-center items-center text-center text-white px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Welcome to YourAdress
+          Découvrez nos logements : confort, lumière et emplacement idéal
           </h1>
           <p className="text-lg md:text-xl text-white/90 mb-6 max-w-xl">
             Discover and book charming places to stay across Morocco
@@ -90,7 +90,7 @@ const HomePage = () => {
       <section className="relative">
         <div className="sticky top-20 z-10 animate-fade-in bg-white p-6 rounded-xl shadow-md">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-semibold">Featured Stays</h2>
+            <h2 className="text-2xl font-semibold">Des solutions de logement adaptées à vos besoins</h2>
             {/* <Link
               href="/hotels"
               className="text-yellow-600 hover:underline text-sm font-medium"

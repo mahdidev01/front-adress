@@ -61,7 +61,7 @@ const Header = () => {
           <Link
             href="https://youradress.hotelrunner.com/bv3/search"
           >
-            <Button className="w-full">Réserver</Button>
+            <Button className="w-full bg-[#e1c287] text-white hover:bg-yellow-600 cursor-pointer">Réserver maintenant</Button>
           </Link>
         </div>
 
@@ -93,7 +93,7 @@ const Header = () => {
             <Link
               href="https://youradress.hotelrunner.com/bv3/search"
             >
-              <Button className="w-full">Réserver</Button>
+              <Button className="w-full bg-[#e1c287] text-white hover:bg-yellow-600 cursor-pointer">Réserver maintenant</Button>
             </Link>
           </div>
         </div>
