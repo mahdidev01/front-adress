@@ -10,31 +10,31 @@ import {
 const faqs = [
   {
     id: "q1",
-    question: "How do I book a stay?",
+    question: "Comment réserver un logement ?",
     answer:
-      "Simply browse listings, pick your dates, fill in your information, and confirm your booking.",
+      "Rien de plus simple ! Parcourez les logements disponibles sur notre site, choisissez vos dates, remplissez vos informations, puis confirmez votre réservation en ligne en quelques clics. Une confirmation vous sera envoyée par e-mail dès validation.",
   },
   {
     id: "q2",
-    question: "Can I cancel my reservation?",
-    answer:
-      "Yes, cancellation policies depend on the listing. Please check the details on each listing page.",
+    question: "Puis-je annuler ma réservation ?",
+    answer: `
+    Toute annulation doit être notifiée par écrit (email). Des frais d'annulation s'appliquent comme décrit sur la page Conditions Générales de Vente.`,
   },
   {
     id: "q3",
-    question: "Is payment secure?",
+    question: "Le paiement est-il sécurisé ?",
     answer:
-      "Absolutely. All payments are processed securely via our trusted partners like CMI and Wafacash.",
+      "Oui, tous les paiements effectués sur notre site sont 100 % sécurisés grâce à notre partenaire Payzone, reconnu pour son haut niveau de sécurité. Vos données bancaires sont cryptées et protégées.",
   },
 ];
 
 const FaqSection = () => {
   return (
-    <section className="relative py-20 bg-gradient-to-b from-white to-gray-50">
+    <section className="py-12 bg-muted/40 left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
       <div className="sticky top-24 z-10 animate-in fade-in duration-700 ease-out">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">
-            Questions fréquemment posées
+            Réponses à vos questions fréquentes
           </h2>
 
           <Accordion type="single" collapsible className="space-y-4">

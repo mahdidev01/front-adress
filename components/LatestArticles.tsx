@@ -26,7 +26,7 @@ export default function LatestArticles() {
   }, []);
 
   return (
-    <section className="py-12 bg-muted/40">
+    <section className="py-12 bg-muted/40 left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-3xl font-bold mb-10 text-center">
           Trouvez l'inspiration pour votre prochain voyage

@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import LatestArticles from "@/components/LatestArticles";
 import HeroSection from "@/components/HeroSection";
 import FeaturedListings from "@/components/FeaturedListings";
-import GallerySection from "@/components/GallerySection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FaqSection from "@/components/FaqSection";
 import MapSection from "@/components/MapSection";
+import AboutSection from "@/components/AboutSection";
+import WhyChooseUsSection from "@/components/WhyChooseUsSection";
 
 interface Listing {
   id: number;
@@ -46,10 +47,12 @@ const HomePage = () => {
     <div className="container mx-auto px-6 py-10 space-y-20">
       {/* Hero Section */}
       <HeroSection />
+      {/* About Section */}
+      <AboutSection />
       {/* Featured Listings */}
       <FeaturedListings listings={listings} loading={loading} />
       {/* Gallery Section */}
-      <GallerySection />
+      <WhyChooseUsSection />
       {/* Blogs Section */}
       <LatestArticles />
       {/* Testimonials Section */}

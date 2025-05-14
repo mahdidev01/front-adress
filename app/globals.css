@@ -131,3 +131,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* slider testimonials arrows  */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #e1c287 !important;
+}
