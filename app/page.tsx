@@ -70,15 +70,15 @@ const HomePage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/10 z-10"></div>
         <div className="relative z-20 h-full flex flex-col justify-center items-center text-center text-white px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          Découvrez nos logements : confort, lumière et emplacement idéal
+            Découvrez nos logements : confort, lumière et emplacement idéal
           </h1>
           <p className="text-lg md:text-xl text-white/90 mb-6 max-w-xl">
-            Discover and book charming places to stay across Morocco
+            Réservez des hébergements de charme à travers le Maroc
           </p>
           <div>
             <SearchFilter />
           </div>
-            {/* <Button className="text-lg px-12 py-6 rounded-full bg-white text-black hover:bg-gray-200 transition">
+          {/* <Button className="text-lg px-12 py-6 rounded-full bg-white text-black hover:bg-gray-200 transition">
               Browse All Stays
             </Button> */}
         </div>
@@ -90,7 +90,9 @@ const HomePage = () => {
       <section className="relative">
         <div className="sticky top-20 z-10 animate-fade-in bg-white p-6 rounded-xl shadow-md">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-semibold">Des solutions de logement adaptées à vos besoins</h2>
+            <h2 className="text-2xl font-semibold">
+              Des solutions de logement adaptées à vos besoins
+            </h2>
             {/* <Link
               href="/hotels"
               className="text-yellow-600 hover:underline text-sm font-medium"
@@ -136,7 +138,7 @@ const HomePage = () => {
       <section className="relative">
         <div className="sticky top-24 z-10 animate-fade-in">
           <h2 className="text-2xl font-semibold mb-12 text-center">
-            Explore Morocco in Pictures
+            Explorez le Maroc en images
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-6 gap-4 auto-rows-[200px]">
             {[
@@ -230,7 +232,7 @@ const HomePage = () => {
       <section className="relative">
         <div className="sticky top-24 z-10 animate-fade-in bg-gray-100 rounded-xl p-10">
           <h2 className="text-2xl font-semibold mb-8 text-center">
-            What Guests Are Saying
+            Ce que disent les clients
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
@@ -264,7 +266,7 @@ const HomePage = () => {
         <div className="sticky top-24 z-10 animate-in fade-in duration-700 ease-out">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">
-              Frequently Asked Questions
+              Questions fréquemment posées
             </h2>
 
             <Accordion type="single" collapsible className="space-y-4">
@@ -306,7 +308,7 @@ const HomePage = () => {
       <section className="relative">
         <div className="sticky top-24 z-10 animate-fade-in">
           <h2 className="text-2xl font-semibold mb-6 text-center">
-            Where to Find Us
+            Où nous trouver
           </h2>
           <div className="w-full h-[400px] rounded-lg overflow-hidden shadow-md">
             <iframe

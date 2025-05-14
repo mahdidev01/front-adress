@@ -8,8 +8,14 @@ const Footer = () => {
     <footer className="bg-gray-100 mt-20 py-10">
       <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between gap-8">
         <div>
-          <h3 className="text-xl font-bold text-yellow-500 mb-2">YourAdress</h3>
-          <p className="text-sm text-gray-600">
+        <Link href="/" className="text-xl font-bold text-black">
+          <img
+            src="/logo.png" // 🖼️ Remplace par le bon chemin relatif vers ton logo
+            alt="YourAdress Logo"
+            className="w-[70px] h-auto"
+          />
+        </Link>
+          <p className="text-sm text-gray-600 mt-4">
             Votre plateforme marocaine pour réserver facilement des logements.
           </p>
         </div>

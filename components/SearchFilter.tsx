@@ -62,7 +62,7 @@ export const SearchFilter = () => {
         </label>
         <Select onValueChange={setSelectedCity} value={selectedCity}>
           <SelectTrigger className="w-full h-11 px-4">
-            <SelectValue placeholder="Select your stay" />
+            <SelectValue placeholder="Sélectionnez votre séjour" />
           </SelectTrigger>
           <SelectContent>
             {moroccanCities.map((city) => (
@@ -77,14 +77,14 @@ export const SearchFilter = () => {
       {/* Guests Selector */}
       <div className="w-full md:w-[150px]">
         <label className="block text-sm font-medium text-gray-700 mb-1">
-          Guests
+        Invités
         </label>
         <Select
           onValueChange={(val) => setGuestFilter(Number(val))}
           value={guestFilter?.toString() ?? ""}
         >
           <SelectTrigger className="w-full h-11 px-4 text-black">
-            <SelectValue placeholder="Guests" />
+            <SelectValue placeholder="2" />
           </SelectTrigger>
           <SelectContent>
             {[...Array(4).keys()].map((num) => (
@@ -133,7 +133,7 @@ export const SearchFilter = () => {
       {/* Search Button */}
       <div className="w-full md:w-auto">
         <Button onClick={handleSearch} className="w-full md:w-auto h-11 bg-[#e1c287] text-white hover:bg-yellow-600 cursor-pointer">
-          Search
+          Réserver
         </Button>
       </div>
     </div>
