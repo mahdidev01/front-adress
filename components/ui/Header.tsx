@@ -42,11 +42,11 @@ const Header = () => {
           />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-10">
           {[
             { href: "/", label: "Accueil" },
-            { href: "/hotels", label: "Hébergements" },
             { href: "/about", label: "À propos" },
+            { href: "/hebergements", label: "Hébergements" },
             { href: "/contact", label: "Contact" },
           ].map((item) => (
             <Link

@@ -9,6 +9,7 @@ import MapSection from "@/components/MapSection";
 import AboutSection from "@/components/AboutSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
 import PartnersSection from "@/components/PartnersSection";
+import CallToAction from "@/components/callToAction";
 
 interface Listing {
   id: number;
@@ -62,6 +63,8 @@ const HomePage = () => {
       <FaqSection />
       {/* Partenaires Section */}
       <PartnersSection />
+      {/* callToAction Section */}
+      <CallToAction />
       {/* Map Section */}
       {/* <MapSection /> */}
     </div>
