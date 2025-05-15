@@ -6,13 +6,13 @@ const AboutSection = () => {
       <div className="container mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
         {/* Texte à gauche */}
         <div className="md:w-1/2">
-          <h2 className="text-3xl font-bold mb-4">Youradreess</h2>
+          <h2 className="text-3xl font-bold mb-4">Youradreess, YourChoice</h2>
           <p className="text-gray-700 text-lg leading-relaxed">
             Chez <b>Youradress</b>, la location de studio ou d’appartement devient <b>une
             expérience fluide, personnalisée et rassurante.</b>
             <br /><br />Que vous cherchiez
             un logement pour quelques jours ou plusieurs semaines, nous vous
-            proposons des espaces soigneusement sélectionnés, <b>lumineux</b>, <b>équipés</b>
+            proposons des espaces soigneusement sélectionnés, <b>lumineux</b>, <b>équipés </b>
             et <b>situés</b> dans les meilleurs quartiers.
             <br /><br />Notre service de
             conciergerie intégré <b>vous accompagne</b> à chaque étape : check-in

@@ -42,26 +42,28 @@ const Header = () => {
           />
         </Link>
 
-        <nav className="space-x-6 hidden md:flex">
-          <Link href="/" className="text-gray-700 hover:text-yellow-500">
-            Accueil
-          </Link>
-          <Link href="/hotels" className="text-gray-700 hover:text-yellow-500">
-            Hebergements
-          </Link>
-          <Link href="/about" className="text-gray-700 hover:text-yellow-500">
-            À propos
-          </Link>
-          <Link href="/contact" className="text-gray-700 hover:text-yellow-500">
-            Contact
-          </Link>
+        <nav className="hidden md:flex items-center gap-6">
+          {[
+            { href: "/", label: "Accueil" },
+            { href: "/hotels", label: "Hébergements" },
+            { href: "/about", label: "À propos" },
+            { href: "/contact", label: "Contact" },
+          ].map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="relative text-gray-700 hover:text-[#e1c287] font-medium transition-colors duration-200 hover:after:w-full after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-[#e1c287] after:transition-all after:duration-300"
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         <div className="hidden md:flex gap-4 items-center">
-          <Link
-            href="https://youradress.hotelrunner.com/bv3/search"
-          >
-            <Button className="w-full bg-[#e1c287] text-white hover:bg-yellow-600 cursor-pointer">Réserver maintenant</Button>
+          <Link href="https://youradress.hotelrunner.com/bv3/search">
+            <Button className="w-full bg-[#e1c287] text-white hover:bg-yellow-600 cursor-pointer">
+              Réserver maintenant
+            </Button>
           </Link>
         </div>
 
@@ -90,10 +92,10 @@ const Header = () => {
             </Link>
           </nav>
           <div className="flex flex-col gap-2">
-            <Link
-              href="https://youradress.hotelrunner.com/bv3/search"
-            >
-              <Button className="w-full bg-[#e1c287] text-white hover:bg-yellow-600 cursor-pointer">Réserver maintenant</Button>
+            <Link href="https://youradress.hotelrunner.com/bv3/search">
+              <Button className="w-full bg-[#e1c287] text-white hover:bg-yellow-600 cursor-pointer">
+                Réserver maintenant
+              </Button>
             </Link>
           </div>
         </div>

@@ -30,7 +30,7 @@ const faqs = [
 
 const FaqSection = () => {
   return (
-    <section className="py-12 bg-muted/40 left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+    <section className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-16 bg-muted/40">
       <div className="sticky top-24 z-10 animate-in fade-in duration-700 ease-out">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">

@@ -48,7 +48,8 @@ export default function TestimonialsCarousel() {
       >
         {testimonials.map((t, i) => (
           <SwiperSlide key={i}>
-            <div className="bg-gray-100 rounded-lg p-6 shadow h-full flex flex-col justify-between">
+            
+            <div className="bg-[#fff9f1] rounded-lg p-6 shadow h-full flex flex-col justify-between">
               <p className="italic text-gray-600 mb-4">“{t.text}”</p>
               <p className="text-sm font-semibold text-right">— {t.name}</p>
             </div>
