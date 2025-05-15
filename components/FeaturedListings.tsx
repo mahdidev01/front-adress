@@ -45,7 +45,7 @@ const FeaturedListings = ({
               <Link
                 key={room.id}
                 href={`/room/${room.id}`}
-                className="bg-white rounded-xl shadow-md hover:shadow-lg transition hover:scale-[0.97] overflow-hidden"
+                className="bg-[#fff9f1] rounded-xl shadow-md hover:shadow-lg transition hover:scale-[0.97] overflow-hidden"
               >
                 <div className="relative w-full h-56">
                   <Image
@@ -56,7 +56,7 @@ const FeaturedListings = ({
                   />
                 </div>
                 <div className="p-4 space-y-2">
-                  <h3 className="text-lg font-bold text-gray-800">
+                  <h3 className="text-lg font-bold text-gray-700">
                     {room.title}
                   </h3>
                   <p className="text-sm text-gray-500">{room.city}</p>

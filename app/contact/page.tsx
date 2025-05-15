@@ -26,93 +26,106 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-6 py-12 animate-fade-in">
-      <h1 className="text-3xl font-bold mb-6 text-center">Contactez-nous</h1>
+    <div className="max-w-7xl mx-auto px-6 py-16 animate-fade-in">
+      <h1 className="text-4xl font-bold text-center mb-12 text-[#e1c287]">
+        Contactez-nous
+      </h1>
 
-      {/* Contact direct */}
-      <div className="bg-gray-100 rounded-lg p-6 mb-8 shadow-sm space-y-4">
-        <div className="flex items-center gap-3">
-          <Phone className="text-yellow-600" />
-          <span className="text-gray-700 font-medium">+212 6 67 29 15 75</span>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        {/* CONTACT INFOS */}
+        <div className="bg-[#fff9f1] rounded-xl p-6 shadow space-y-6">
+          <h2 className="text-2xl font-semibold text-[#e1c287] mb-4">
+            Nos coordonnées
+          </h2>
+          <div className="flex items-center gap-4">
+            <Phone className="text-[#e1c287]" />
+            <span className="text-gray-800 font-medium text-sm">
+              +212 6 67 29 15 75
+            </span>
+          </div>
+          <div className="flex items-center gap-4">
+            <Mail className="text-[#e1c287]" />
+            <span className="text-gray-800 font-medium text-sm">
+              contact@youradress.com
+            </span>
+          </div>
+          <div className="flex items-start gap-4">
+            <MapPin className="text-[#e1c287] mt-1" />
+            <p className="text-gray-800 font-medium text-sm">
+              332 Bd BRAHIM ROUDANI, ETAGE 5, APPT 21, RESIDENCE RAYHANE
+              Q.MAARIF
+              <br />
+              Casablanca, Maroc
+            </p>
+          </div>
         </div>
-        <div className="flex items-center gap-3">
-          <Mail className="text-yellow-600" />
-          <span className="text-gray-700 font-medium">
-            contact@youradress.com
-          </span>
-        </div>
-        <div className="flex items-start gap-3">
-          <MapPin className="text-yellow-600" />
-          <p className="text-gray-700 font-medium">
-            332 Bd BRAHIM ROUDANI, ETAGE 5, APPT 21, RESIDENCE RAYHANE Q.MAARIF
-            <br />
-            Casablanca, Maroc
-          </p>
-        </div>
+
+        {/* FORMULAIRE */}
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white p-6 rounded-xl shadow space-y-6 border border-gray-100"
+        >
+          <div>
+            <label
+              htmlFor="name"
+              className="block mb-1 font-medium text-gray-700"
+            >
+              Nom
+            </label>
+            <Input
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Votre nom"
+              required
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="email"
+              className="block mb-1 font-medium text-gray-700"
+            >
+              Email
+            </label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="vous@example.com"
+              required
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="message"
+              className="block mb-1 font-medium text-gray-700"
+            >
+              Message
+            </label>
+            <Textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              rows={5}
+              placeholder="Écrivez votre message ici..."
+              required
+            />
+          </div>
+
+          <Button
+            type="submit"
+            className="w-full bg-[#e1c287] hover:bg-[#d1b070] text-white"
+          >
+            Envoyer
+          </Button>
+        </form>
       </div>
-
-      {/* Formulaire */}
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-6 bg-white p-6 rounded-xl shadow-md"
-      >
-        <div>
-          <label
-            htmlFor="name"
-            className="block mb-1 font-medium text-gray-700"
-          >
-            Nom
-          </label>
-          <Input
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Votre nom"
-            required
-          />
-        </div>
-
-        <div>
-          <label
-            htmlFor="email"
-            className="block mb-1 font-medium text-gray-700"
-          >
-            Email
-          </label>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="vous@example.com"
-            required
-          />
-        </div>
-
-        <div>
-          <label
-            htmlFor="message"
-            className="block mb-1 font-medium text-gray-700"
-          >
-            Message
-          </label>
-          <Textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            rows={5}
-            placeholder="Écrivez votre message ici..."
-            required
-          />
-        </div>
-
-        <Button type="submit" className="w-full">
-          Envoyer
-        </Button>
-      </form>
     </div>
   );
 };

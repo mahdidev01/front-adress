@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { HelpCircle } from "lucide-react";
 
 const faqs = [
   {
@@ -30,26 +31,27 @@ const faqs = [
 
 const FaqSection = () => {
   return (
-    <section className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-16 bg-muted/40">
-      <div className="sticky top-24 z-10 animate-in fade-in duration-700 ease-out">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">
-            Réponses à vos questions fréquentes
-          </h2>
-
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq) => (
-              <AccordionItem key={faq.id} value={faq.id}>
-                <AccordionTrigger className="text-lg font-medium bg-white rounded-xl px-6 py-4 shadow-sm hover:shadow-md transition-all duration-200">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-600 bg-white px-6 py-4 rounded-b-xl border-t border-gray-100">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+    <section className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#fff9f1] py-20">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 animate-in fade-in duration-700 ease-out">
+        <div className="flex items-center justify-center mb-4">
+          <HelpCircle className="w-8 h-8 text-[#e1c287]" />
         </div>
+        <h2 className="text-3xl font-bold text-center text-[#e1c287] mb-10">
+          Réponses à vos questions fréquentes
+        </h2>
+
+        <Accordion type="single" collapsible className="space-y-4">
+          {faqs.map((faq) => (
+            <AccordionItem key={faq.id} value={faq.id}>
+              <AccordionTrigger className="text-lg font-semibold bg-white rounded-xl px-6 py-4 shadow hover:shadow-md transition-all duration-200 text-gray-800 hover:text-[#e1c287]">
+                {faq.question}
+              </AccordionTrigger>
+              <AccordionContent className="text-gray-700 bg-white px-6 py-4 rounded-b-xl border-t border-gray-100 leading-relaxed text-sm">
+                {faq.answer}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </div>
     </section>
   );
