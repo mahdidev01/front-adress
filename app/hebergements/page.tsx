@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import Link from "next/link";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/zoom";
@@ -14,6 +12,7 @@ import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
+import { ZoomIn } from "lucide-react"; // Icône de loupe
 
 const HebergementPage = () => {
   const [loading, setLoading] = useState(true);
@@ -88,14 +87,17 @@ const HebergementPage = () => {
                     setLightboxIndex1(i);
                     setLightboxOpen1(true);
                   }}
-                  className="relative w-full h-40 rounded-xl overflow-hidden shadow-md cursor-pointer"
+                  className="relative w-full h-40 rounded-xl overflow-hidden shadow-md cursor-pointer group"
                 >
                   <Image
                     src={img.src}
                     alt={`Photo ${i + 1}`}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
+                  <div className="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                    <ZoomIn className="w-8 h-8 text-[#333]" />
+                  </div>
                 </div>
               ))}
 
@@ -172,34 +174,35 @@ const HebergementPage = () => {
           </div>
           {/* IMAGE */}
           <div className="relative w-full h-80 rounded-xl overflow-hidden shadow-md">
-            <div className="relative w-full h-80 rounded-xl overflow-hidden shadow-md">
-              <div className="grid grid-cols-3 gap-2">
-                {logement2Images.map((img, i) => (
-                  <div
-                    key={i}
-                    onClick={() => {
-                      setLightboxIndex2(i);
-                      setLightboxOpen2(true);
-                    }}
-                    className="relative w-full h-40 rounded-xl overflow-hidden shadow-md cursor-pointer"
-                  >
-                    <Image
-                      src={img.src}
-                      alt={`Photo ${i + 1}`}
-                      fill
-                      className="object-cover"
-                    />
+            <div className="grid grid-cols-3 gap-2">
+              {logement2Images.map((img, i) => (
+                <div
+                  key={i}
+                  onClick={() => {
+                    setLightboxIndex2(i);
+                    setLightboxOpen2(true);
+                  }}
+                  className="relative w-full h-40 rounded-xl overflow-hidden shadow-md cursor-pointer group"
+                >
+                  <Image
+                    src={img.src}
+                    alt={`Photo ${i + 1}`}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                    <ZoomIn className="w-8 h-8 text-[#333]" />
                   </div>
-                ))}
+                </div>
+              ))}
 
-                <Lightbox
-                  open={lightboxOpen2}
-                  close={() => setLightboxOpen2(false)}
-                  slides={logement2Images}
-                  index={lightboxIndex2}
-                  plugins={[Zoom, Thumbnails]}
-                />
-              </div>
+              <Lightbox
+                open={lightboxOpen2}
+                close={() => setLightboxOpen2(false)}
+                slides={logement2Images}
+                index={lightboxIndex2}
+                plugins={[Zoom, Thumbnails]}
+              />
             </div>
           </div>
         </div>
@@ -208,34 +211,35 @@ const HebergementPage = () => {
         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 items-center gap-10">
           {/* IMAGE */}
           <div className="relative w-full h-80 rounded-xl overflow-hidden shadow-md">
-            <div className="relative w-full h-80 rounded-xl overflow-hidden shadow-md">
-              <div className="grid grid-cols-3 gap-2">
-                {logement3Images.map((img, i) => (
-                  <div
-                    key={i}
-                    onClick={() => {
-                      setLightboxIndex3(i);
-                      setLightboxOpen3(true);
-                    }}
-                    className="relative w-full h-40 rounded-xl overflow-hidden shadow-md cursor-pointer"
-                  >
-                    <Image
-                      src={img.src}
-                      alt={`Photo ${i + 1}`}
-                      fill
-                      className="object-cover"
-                    />
+            <div className="grid grid-cols-3 gap-2">
+              {logement3Images.map((img, i) => (
+                <div
+                  key={i}
+                  onClick={() => {
+                    setLightboxIndex3(i);
+                    setLightboxOpen3(true);
+                  }}
+                  className="relative w-full h-40 rounded-xl overflow-hidden shadow-md cursor-pointer group"
+                >
+                  <Image
+                    src={img.src}
+                    alt={`Photo ${i + 1}`}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                    <ZoomIn className="w-8 h-8 text-[#333]" />
                   </div>
-                ))}
+                </div>
+              ))}
 
-                <Lightbox
-                  open={lightboxOpen3}
-                  close={() => setLightboxOpen3(false)}
-                  slides={logement3Images}
-                  index={lightboxIndex3}
-                  plugins={[Zoom, Thumbnails]}
-                />
-              </div>
+              <Lightbox
+                open={lightboxOpen3}
+                close={() => setLightboxOpen3(false)}
+                slides={logement3Images}
+                index={lightboxIndex3}
+                plugins={[Zoom, Thumbnails]}
+              />
             </div>
           </div>
 
