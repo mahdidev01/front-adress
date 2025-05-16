@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin } from "lucide-react";
 
 const ContactPage = () => {
+  const [successMessage, setSuccessMessage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,10 +20,23 @@ const ContactPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData); // Replace with API call
-    setFormData({ name: "", email: "", message: "" });
+
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    if (res.ok) {
+      setSuccessMessage("Message envoyé");
+      setFormData({ name: "", email: "", message: "" });
+    } else {
+      setSuccessMessage("Erreur lors de l'envoi du message.");
+    }
+
+    setTimeout(() => setSuccessMessage(""), 5000);
   };
 
   return (
@@ -120,11 +134,16 @@ const ContactPage = () => {
 
           <Button
             type="submit"
-            className="w-full bg-[#e1c287] hover:bg-[#d1b070] text-white"
+            className="w-full bg-[#e1c287] hover:bg-[#d1b070] text-white cursor-pointer"
           >
             Envoyer
           </Button>
         </form>
+        {successMessage && (
+          <div className="mt-6 w-full rounded-lg bg-green-50 text-green-800 text-center px-4 py-3 font-semibold shadow-md animate-fade-in">
+            {successMessage}
+          </div>
+        )}
       </div>
     </div>
   );

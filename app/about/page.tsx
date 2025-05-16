@@ -90,11 +90,11 @@ const AproposPage = () => {
               <HeartHandshake className="w-8 h-8 text-[#e1c287] mb-4" />
               <h3 className="text-xl font-semibold mb-2">Nos valeurs</h3>
               <ul className="text-gray-700 text-sm space-y-1 list-disc list-inside">
-                <li>🙏 Hospitalité & Accueil</li>
-                <li>✨ Transparence des prix</li>
-                <li>♿️ Accessibilité pour tous</li>
-                <li>✅ Fiabilité des partenaires</li>
-                <li>💡 Service sur mesure</li>
+                <li>Hospitalité & Accueil</li>
+                <li>Transparence des prix</li>
+                <li>Accessibilité pour tous</li>
+                <li>Fiabilité des partenaires</li>
+                <li>Service sur mesure</li>
               </ul>
             </div>
           </>
