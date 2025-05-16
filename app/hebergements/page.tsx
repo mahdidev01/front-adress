@@ -57,7 +57,7 @@ const HebergementPage = () => {
     { src: "/images/apps/app-moyen/16.jpg" },
     { src: "/images/apps/app-moyen/17.jpg" },
     { src: "/images/apps/app-moyen/18.jpg" },
-    { src: "/images/apps/app-moyen/19.jpg" },
+    // { src: "/images/apps/app-moyen/19.jpg" },
   ];
 
   const logement3Images = [
@@ -128,7 +128,7 @@ const HebergementPage = () => {
                 >
                   <Image
                     src={img.src}
-                    alt={`Photo ${i + 1}`}
+                    alt={`Studio à louer à Casablanca – Lumineux, moderne et fonctionnel`}
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
@@ -219,7 +219,8 @@ const HebergementPage = () => {
                 >
                   <Image
                     src={img.src}
-                    alt={`Photo ${i + 1}`}
+                    alt={`Appartement à Louer à Casablanca avec Terrasse – Confort &
+              Intimité`}
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
@@ -257,7 +258,8 @@ const HebergementPage = () => {
                 >
                   <Image
                     src={img.src}
-                    alt={`Photo ${i + 1}`}
+                    alt={`Appartement Supérieur à Louer à Casablanca – Terrasse Privée et
+              Haut Standing`}
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
