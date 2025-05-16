@@ -44,7 +44,8 @@ const FeaturedListings = ({
             featured.map((room) => (
               <Link
                 key={room.id}
-                href={`/room/${room.id}`}
+                // href={`/room/${room.id}`}
+                href={`/hebergements`}
                 className="bg-[#fff9f1] rounded-xl shadow-md hover:shadow-lg transition hover:scale-[0.97] overflow-hidden"
               >
                 <div className="relative w-full h-56">
